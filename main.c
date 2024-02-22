@@ -230,6 +230,63 @@ ordered_array_set ordered_array_set_universum_create(size_t size) {
     return universum_set;
 }
 
+// Проверка элемента на строгое включение в множество
+int isProperSubsetOrdered(ordered_array_set set1, ordered_array_set set2) {
+    if (set1.size >= set2.size) {
+        return 0; // Если размер первого множества больше или равен размеру второго, нет
+        //строгого включения
+    }
+    int i = 0, j = 0;
+    while (i < set1.size && j < set2.size) {
+        if (set1.data[i] == set2.data[j]) {
+            i++;
+            j++;
+        } else if (set1.data[i] < set2.data[j]) {
+            return 0; // Если первое множество содержит элемент, которого нет во втором,
+            //то нет строгого включения
+        } else {
+            j++;
+        }
+    }
+    if (i == set1.size) {
+        return 1; // Если все элементы первого множества входят во второе и размеры
+        //различны, есть строгое включение
+    }
+    return 0;
+}
+
+bool containsArray(int *a, int *b, size_t n, size_t m) {
+    bool contains = false;
+    for (int i = 0; i <= n - m; i++) {
+        bool match = true;
+        for (int j = 0; j < m; j++) {
+            if (a[i + j] != b[j]) {
+                match = false;
+                break;
+            }
+        }
+        if (match) {
+            contains = true;
+            break;
+        }
+    }
+    return contains;
+}
+
+bool areArraysEqual(int *a, int *b, size_t n, size_t m) {
+    if (n != m) {
+        return false;
+    }
+
+    for (int i = 0; i < n; i++) {
+        if (a[i] != b[i]) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
 int main() {
     ordered_array_set A;
     A.size = 7;
