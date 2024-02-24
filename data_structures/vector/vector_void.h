@@ -21,6 +21,7 @@ typedef struct vector_void {
 // то поле baseTypeSize = sizeof(float)
 } vector_void;
 
+
 //возвращает структуру-дескриптор вектор из n значений.
 vector_void createVectorV(size_t n, size_t baseTypeSize);
 

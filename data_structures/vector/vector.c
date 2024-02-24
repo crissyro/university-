@@ -1,5 +1,6 @@
 #include "vector.h"
 
+
 //– Если ОС не смогла выделить необходимый фрагмент памяти, вывести
 //сообщение в поток ошибок и прервать выполнение программы
 
@@ -21,8 +22,8 @@ bool isFull(vector *v) {
 
 vector createVector(size_t n) {
     vector v;
-    v.size = n;
-    v.capacity = n * 2;
+    v.size = 0;
+    v.capacity = n;
     v.data = (int *)malloc(v.capacity * sizeof (int));
 
     check_Memory_(&v);
@@ -60,8 +61,6 @@ void deleteVector(vector *v) {
     free(v -> data);
 }
 
-
-//возвращает i-ый элемент вектора v
 int getVectorValue(vector *v, size_t i) {
     return v->data[i];
 }
@@ -77,13 +76,11 @@ void extension_Memory_Vector_(vector *v) {
     check_Memory_(v);
 }
 
-//добавляет элемент в конец вектора
 void pushBack(vector *v, int x) {
     extension_Memory_Vector_(v);
     append_(v->data,  &v->size, x);
 }
 
-//удаляет элемент с конца вектора
 void popBack(vector *v) {
     if (isEmpty(v)) {
         fprintf(stderr, "vector is empty");
@@ -92,12 +89,14 @@ void popBack(vector *v) {
         deleteByPosSaveOrder_(v->data, &v->size, v->size);
 }
 
-// возвращает указатель на
-//index-ый элемент вектора.
-int* atVector(vector *v, size_t index);
+int* atVector(vector *v, size_t index) {
+    return v->data + index - 1;
+}
 
-//возвращает указатель на последний элемент вектора.
-int* back(vector *v);
+int* back(vector *v) {
+    return v->data + v->size - 1;
+}
 
-//возвращает указатель на нулевой элемент вектора.
-int* front(vector *v);
+int* front(vector *v) {
+    return v->data;
+}
