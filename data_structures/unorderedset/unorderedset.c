@@ -17,7 +17,6 @@ static void unordered_array_set_shrink_to_fit(unordered_array_set *a){
         a->data = (int*)realloc(a->data, sizeof(int)*a->size);
         a->capacity = a->size;
     }
-    unordered_array_set_delete(*a);
 }
 
 // возвращает множество, состоящее из элементов массива a размера size

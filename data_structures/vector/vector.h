@@ -45,7 +45,7 @@ int getVectorValue(vector *v, size_t i);
 //добавляет элемент в конец вектора
 void pushBack(vector *v, int x);
 
-//у3даляет элемент с конца вектора
+//удаляет элемент с конца вектора
 void popBack(vector *v);
 
 // возвращает указатель на
