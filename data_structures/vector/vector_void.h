@@ -46,14 +46,14 @@ bool isEmptyV(vector_void *v);
 bool isFullV(vector_void *v);
 
 // записывает по адресу destination index-ый элемент вектора v
-void getVectorValueV(vector_void *v, size_t index, void *destination);
+void getVectorValueV(vector_void *v, size_t index, void* destination);
 
 //записывает на index-ый элемент вектора v значение, расположенное по
 //адресу source
-void setVectorValueV(vector_void *v, size_t index, void *source);
+void setVectorValueV(vector_void *v, size_t index, void* source);
 
 //добавляет элемент в конец вектора
-void pushBackV(vector_void *v, void *source);
+void pushBackV(vector_void *v, void* source);
 
 //удаляет элемент с конца вектора
 void popBackV(vector_void *v);
