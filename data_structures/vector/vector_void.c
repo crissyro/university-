@@ -60,6 +60,9 @@ void shrinkToFitV(vector_void *v) {
 
 void deleteVectorV(vector_void *v) {
     free(v -> data);
+    v->data = NULL;
+    v->size = 0;
+    v->capacity = 0;
 }
 
 bool isEmptyV(vector_void *v) {
