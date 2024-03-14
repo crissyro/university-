@@ -1,4 +1,5 @@
 #include "../data_structures/matrix/matrix.c"
+#include <math.h>
 
 
 // 1
@@ -141,33 +142,161 @@ long long findSumOfMaxesOfPseudoDiagonal(matrix m) {
 }
 
 //8
+int getMinInArea(matrix m) {
+    position p_max = getMaxValuePos(m);
+    int min = INT_MAX;
+    for (int i = 0; i < m.nCols; ++i)
+        for (int j = 0; j < p_max.rowIndex - abs(p_max.colIndex - i); ++j) {
+            if (m.values[j][i] < min)
+                min = m.values[j][i];
+        }
+    return min;
+}
 
 // 9
+float getDistance(int *a, int n) {
+    return sqrtf(getSum(a, n));
+}
 
+void insertionSortRowsMatrixByRowCriteriaF(matrix m,float (*criteria)(int *, int)) {
+    for (int i = 1; i < m.nRows; i++) {
+        int j = i;
+        while (j > 0 && criteria(m.values[j - 1], m.nCols) > criteria(m.values[j], m.nCols)) {
+            float *temp = m.values[j];
+            m.values[j] = m.values[j - 1];
+            m.values[j - 1] = temp;
+            j--;
+        }
+    }
+}
+
+void sortByDistances(matrix m) {
+    insertionSortRowsMatrixByRowCriteriaF(m, getDistance);
+}
 
 // 10
+int cmp_long_long(const void *pa, const void *pb) {
+    long long a = *(long long *)pa;
+    long long b = *(long long *)pb;
+    return (a > b) - (a < b);
+}
 
+int countNUnique(long long *a, int n) {
+    if (n <= 0)
+        return 0;
+
+    int count = 1;
+    qsort(a, n, sizeof(long long), cmp_long_long);
+    for (int i = 1; i < n; i++) {
+        if (a[i] != a[i - 1])
+            count++;
+    }
+    return count;
+}
+
+int countEqClassesByRowsSum(matrix m) {
+    if (m.nRows <= 0 || m.nCols <= 0)
+        return 0;
+
+    long long *row_sum = (long long *)calloc(m.nRows, sizeof(long long));
+    for (int i = 0; i < m.nRows; i++) {
+        for (int j = 0; j < m.nCols; j++) {
+            row_sum[i] += m.values[i][j];
+        }
+    }
+    int unique_sums = countNUnique(row_sum, m.nRows);
+    free(row_sum);
+    return unique_sums;
+}
 
 // 11
+int getNSpecialElement(matrix m) {
+
+}
 
 // 12
+position getLeftMin(matrix m) {
 
+}
+
+void swapPenultimateRow(matrix m, int n) {
+
+}
 
 // 13
+bool isNonDescendingSorted(int *a, int n) {
 
+}
+
+bool hasAllNonDescendingRows(matrix m) {
+
+}
+
+int countNonDescendingRowsMatrices(matrix *ms, int nMatrix) {
+
+}
 
 // 14
+int countValues(const int *a, int n, int value) {
+
+}
+
+int countZeroRows(matrix m) {
+
+}
+
+void printMatrixWithMaxZeroRows(matrix *ms, int nMatrix) {
+
+}
+
+// 15 Дан массив целочисленных квадратных матриц.
+// Вывести матрицы с наименьшей нормой.
+// В качестве нормы матрицы взять максимум абсолютных величин
+//ее элементов.
 
 
-// 15
+// 16 *Дана матрица.
+// Определить 𝑘 – количество "особых" элементов данной матрицы,
+// считая элемент "особым" если в строке слева от него находятся только
+//меньшие элементы, а справа – только б´oльшие
 
+int min2(int a, int b) {
+    return a > b ? a : b;
+}
 
-// 16
+int getNSpecialElement2(matrix m) {
 
+}
 
-// 17
+// 17 *Каждая строка данной матрицы представляет собой координаты вектора в
+//пространстве.
+// Определить, какой из этих векторов образует максимальный угол
+//с данным вектором 𝑣.
 
+double getScalarProduct(int *a, int *b, int n) {
 
-// 18
+}
 
+double getVectorLength(int *a, int n) {
 
+}
+
+double getCosine(int *a, int *b, int n) {
+
+}
+
+int getVectorIndexWithMaxAngle(matrix m, int *b) {
+
+}
+
+// 18  *Дана целочисленная квадратная матрица, все элементы которой различны.
+//Найти скалярное произведение строки,
+// в которой находится наибольший элемент матрицы, на столбец с наименьшим элементом
+
+long long getScalarProductRowAndCol(matrix m, int i, int j) {
+
+}
+
+long long getSpecialScalarProduct(matrix m, int n) {
+
+}
