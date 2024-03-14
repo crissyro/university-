@@ -60,7 +60,24 @@ void sortColsByMinElement(matrix m) {
 
 
 // 4
+matrix mulMatrices(matrix m1, matrix m2) {
+    matrix res = getMemMatrix(m1.nRows, m2.nCols);
 
+    for (int i = 0; i < m1.nRows; i++) {
+        for (int j = 0; j < m2.nCols; j++) {
+            res.values[i][j] = 0;
+            for (int l = 0; l < m1.nCols; l++)
+                res.values[i][j] += m1.values[i][l] * m2.values[l][j];
+        }
+    }
+    return res;
+}
+
+void getSquareOfMatrixIfSymmetric(matrix *m) {
+    if (isSymmetricMatrix(m) && isSquareMatrix(m))
+        *m =  mulMatrices(*m , *m);
+    freeMemMatrix(m);
+}
 
 // 5
 
