@@ -1,5 +1,6 @@
 #include "../data_structures/matrix/matrix.c"
 
+
 // 1
 void swap_Min_Max_Rows(matrix *m) {
     position i_min = getMinValuePos(*m);
@@ -93,6 +94,7 @@ long long getSum(int *a, int n) {
     long long sum = 0;
     for (int i = 0; i < n; i++)
         sum += a[i];
+    return sum;
 }
 
 void transposeIfMatrixHasNotEqualSumOfRows(matrix m) {
@@ -111,12 +113,8 @@ bool isMutuallyInverseMatrices(matrix m1, matrix m2) {
         return false;
 
     matrix res = mulMatrices(m1, m2);
-    if (!isEMatrix(&res)) {
-        freeMemMatrix(&res);
-        return false;
-    }
     freeMemMatrix(&res);
-    return true;
+    return !isEMatrix(&res) ? false : true;
 }
 
 // 7
@@ -125,7 +123,21 @@ int max(int a, int b) {
 }
 
 long long findSumOfMaxesOfPseudoDiagonal(matrix m) {
+    long long max_main_d = m.values[0][0];
+    for (int k = 1; k < m.nRows; ++k) {
+        if (max_main_d < m.values[k][k])
+            max_main_d = m.values[k][k];
+    }
+    int n = m.nRows + m.nCols - 1;
+    long long *max_values = (long long *)calloc(n, sizeof(long long));
+    for (int i = 0; i < m.nRows; i++)
+        for (int j = 0; j < m.nCols; j++)
+            max_values[i+j] = max(max_values[i+j], m.values[m.nRows - i - 1][j]);
 
+    long long sum = getSum(max_values, n) - max_main_d;
+    free(max_values);
+
+    return sum;
 }
 
 //8
