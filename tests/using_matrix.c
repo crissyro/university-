@@ -80,10 +80,35 @@ void getSquareOfMatrixIfSymmetric(matrix *m) {
 }
 
 // 5
+bool isUnique(long long *a, int n) {
+    for (int i = 0; i < n; i++)
+        for (int j = i + 1; j < n; j++) {
+            if (a[i] == a[j])
+                return false;
+        }
+    return true;
+}
 
+long long getSum(int *a, int n) {
+    long long sum = 0;
+    for (int i = 0; i < n; i++)
+        sum += a[i];
+}
+
+void transposeIfMatrixHasNotEqualSumOfRows(matrix m) {
+    long long sum_array[m.nRows];
+    for (int i = 0; i < m.nRows; i++) {
+        sum_array[i] = getSum(m.values, m.nCols);
+    }
+    if (isUnique(sum_array, m.nRows))
+        transposeMatrix(&m);
+
+}
 
 // 6
+bool isMutuallyInverseMatrices(matrix m1, matrix m2) {
 
+}
 
 // 7
 
