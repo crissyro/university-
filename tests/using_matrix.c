@@ -107,11 +107,26 @@ void transposeIfMatrixHasNotEqualSumOfRows(matrix m) {
 
 // 6
 bool isMutuallyInverseMatrices(matrix m1, matrix m2) {
+    if ((m1.nCols != m2.nCols) || (m1.nRows != m2.nRows))
+        return false;
 
+    matrix res = mulMatrices(m1, m2);
+    if (!isEMatrix(&res)) {
+        freeMemMatrix(&res);
+        return false;
+    }
+    freeMemMatrix(&res);
+    return true;
 }
 
 // 7
+int max(int a, int b) {
+    return a > b ? a : b;
+}
 
+long long findSumOfMaxesOfPseudoDiagonal(matrix m) {
+
+}
 
 //8
 
