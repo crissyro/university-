@@ -1,5 +1,6 @@
 #include "../data_structures/matrix/matrix.c"
 #include <math.h>
+#include <assert.h>
 
 
 // 1
@@ -304,19 +305,38 @@ int getNSpecialElement2(matrix m) {
 //с данным вектором 𝑣.
 
 double getScalarProduct(int *a, int *b, int n) {
+    double res = 0;
+    for (int i = 0; i < n; i++)
+        res += a[i] * b[i];
 
+    return res;
 }
 
 double getVectorLength(int *a, int n) {
-
+    double res = getScalarProduct(a, a, n);
+    return sqrt(res);
 }
 
 double getCosine(int *a, int *b, int n) {
-
+    double scalar_product = getScalarProduct(a, b, n);
+    double len_a = getVectorLength(a, n);
+    double len_b = getVectorLength(b, n);
+    return scalar_product / (len_a * len_b);
 }
 
 int getVectorIndexWithMaxAngle(matrix m, int *b) {
+    int max_i = 0;
+    double max_cos = 1;
 
+    for (int i = 0; i < m.nRows; i++) {
+        double cosine = getCosine(m.values[i], b, m.nCols);
+        if (cosine < max_cos) {
+            max_cos = cosine;
+            max_i = i;
+        }
+    }
+
+    return max_i;
 }
 
 // 18  *Дана целочисленная квадратная матрица, все элементы которой различны.
@@ -324,9 +344,32 @@ int getVectorIndexWithMaxAngle(matrix m, int *b) {
 // в которой находится наибольший элемент матрицы, на столбец с наименьшим элементом
 
 long long getScalarProductRowAndCol(matrix m, int i, int j) {
+    long long scalar_product = 0;
+    for (int k = 0; k < m.nCols; k++)
+        scalar_product += m.values[i][k] * m.values[k][j];
 
+    return scalar_product;
 }
 
 long long getSpecialScalarProduct(matrix m, int n) {
+    long long max_el = m.values[0][0];
+    int max_row = 0;
+    long long min_element = m.values[0][0];
+    int min_col = 0;
 
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            if (m.values[i][j] > max_el) {
+                max_el = m.values[i][j];
+                max_row = i;
+            }
+            if (m.values[i][j] < min_element) {
+                min_element = m.values[i][j];
+                min_col = j;
+            }
+        }
+    }
+    long long special_scalar_product = getScalarProductRowAndCol(m, max_row, min_col);
+
+    return special_scalar_product;
 }
