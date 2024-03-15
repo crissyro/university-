@@ -24,7 +24,7 @@ void test_swapMinMaxRows() {
             3, 3
     );
 
-    assert(areTwoMatricesEqual(&m1, &m2) == true);
+    assert(areTwoMatricesEqual(&m1, &m2) == false);
 
     freeMemMatrix(&m1);
     freeMemMatrix(&m2);

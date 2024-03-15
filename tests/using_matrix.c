@@ -305,6 +305,31 @@ void printMatrixWithMaxZeroRows(matrix *ms, int nMatrix) {
 // В качестве нормы матрицы взять максимум абсолютных величин
 //ее элементов.
 
+int matrixNorm(matrix m) {
+    int abs_max = 0;
+    for (int i = 0; i < m.nRows; i++) {
+        for (int j = 0; j < m.nCols; j++) {
+            int abs_value = abs(m.values[i][j]);
+            if (abs_value > abs_max)
+                abs_max = abs_value;
+        }
+    }
+    return abs_max;
+}
+
+void output_Matrix_MinNorm(matrix *ms, int nMatrix) {
+    int min_norm = matrixNorm(ms[0]);
+
+    for (int i = 1; i < nMatrix; i++) {
+        int current_norm = matrixNorm(ms[i]);
+        if (current_norm < min_norm)
+            min_norm = current_norm;
+    }
+    for (int i = 0; i < nMatrix; i++) {
+        if (matrixNorm(ms[i]) == min_norm)
+            outputMatrix(ms[i]);
+    }
+}
 
 // 16 *Дана матрица.
 // Определить 𝑘 – количество "особых" элементов данной матрицы,
@@ -312,11 +337,48 @@ void printMatrixWithMaxZeroRows(matrix *ms, int nMatrix) {
 //меньшие элементы, а справа – только б´oльшие
 
 int min2(int a, int b) {
-    return a > b ? a : b;
+    return a < b ? a : b;
+}
+
+bool isMoreThanLeftEl(int *a, int pos) {
+    for (int i = 0; i < pos; i++) {
+        if (a[i] > a[pos])
+            return false;
+    }
+    return true;
+}
+
+bool isLesThanRightEl(int *a, int n, int pos) {
+    for (int i = pos + 1; i < n; i++) {
+        if (a[i] < a[pos])
+            return false;
+    }
+    return true;
 }
 
 int getNSpecialElement2(matrix m) {
+    int counter = 0;
+    for (int i = 0; i < m.nRows; i++) {
+        int pos = m.nCols / 2;
+        bool flag = true;
+        while (flag || pos != m.nCols || pos != 0) {
+            bool r_res = isLesThanRightEl(m.values[i], m.nCols, pos);
+            bool l_res = isMoreThanLeftEl(m.values[i], pos);
+            if (r_res && pos == 0 || l_res && pos == m.nCols) {
+                counter++;
+                break;
+            }
+            if (r_res && l_res) {
+                counter++;
+                flag = false;
+            } else if (r_res && !l_res)
+                pos++;
+            else
+                pos--;
 
+        }
+    }
+    return counter;
 }
 
 // 17 *Каждая строка данной матрицы представляет собой координаты вектора в
