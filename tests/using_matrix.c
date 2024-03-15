@@ -214,7 +214,14 @@ int countEqClassesByRowsSum(matrix m) {
 
 // 11
 int getNSpecialElement(matrix m) {
-
+    int counter = 0;
+    for (int i = 0; i < m.nRows; i++) {
+        int max_rows = getMax(m.values[i], m.nCols);
+        int sum = getSum(m.values[i], m.nCols) - max_rows;
+        if (max_rows > sum)
+            counter++;
+    }
+    return counter;
 }
 
 // 12
@@ -238,15 +245,28 @@ void swapPenultimateRow(matrix m, int n) {
 
 // 13
 bool isNonDescendingSorted(int *a, int n) {
-
+    for (int i = 1; i < n; i++) {
+        if (a[i] < a[i - 1])
+            return false;
+    }
+    return true;
 }
 
 bool hasAllNonDescendingRows(matrix m) {
-
+    for (int i = 0; i < m.nRows; i++) {
+        if (!isNonDescendingSorted(m.values[i], m.nCols))
+            return false;
+    }
+    return true;
 }
 
 int countNonDescendingRowsMatrices(matrix *ms, int nMatrix) {
-
+    int count = 0;
+    for (int i = 0; i < nMatrix; i++) {
+        if (hasAllNonDescendingRows(ms[i]))
+            count++;
+    }
+    return count;
 }
 
 // 14
