@@ -154,8 +154,16 @@ int getMinInArea(matrix m) {
 }
 
 // 9
+
+float getSumSq(int *a, int n) {
+    float sum = 0;
+    for (int i = 0; i < n; i++)
+        sum += pow(a[i], 2);
+    return sum;
+}
+
 float getDistance(int *a, int n) {
-    return sqrtf(getSum(a, n));
+    return sqrtf(getSumSq(a, n));
 }
 
 void insertionSortRowsMatrixByRowCriteriaF(matrix m,float (*criteria)(int *, int)) {
@@ -164,7 +172,7 @@ void insertionSortRowsMatrixByRowCriteriaF(matrix m,float (*criteria)(int *, int
         while (j > 0 && criteria(m.values[j - 1], m.nCols) > criteria(m.values[j], m.nCols)) {
             float *temp = m.values[j];
             m.values[j] = m.values[j - 1];
-            m.values[j - 1] = temp;
+            m.values[j - 1] = (int *) temp;
             j--;
         }
     }
@@ -182,9 +190,6 @@ int cmp_long_long(const void *pa, const void *pb) {
 }
 
 int countNUnique(long long *a, int n) {
-    if (n <= 0)
-        return 0;
-
     int count = 1;
     qsort(a, n, sizeof(long long), cmp_long_long);
     for (int i = 1; i < n; i++) {
@@ -195,14 +200,11 @@ int countNUnique(long long *a, int n) {
 }
 
 int countEqClassesByRowsSum(matrix m) {
-    if (m.nRows <= 0 || m.nCols <= 0)
-        return 0;
-
     long long *row_sum = (long long *)calloc(m.nRows, sizeof(long long));
     for (int i = 0; i < m.nRows; i++) {
-        for (int j = 0; j < m.nCols; j++) {
+        for (int j = 0; j < m.nCols; j++)
             row_sum[i] += m.values[i][j];
-        }
+
     }
     int unique_sums = countNUnique(row_sum, m.nRows);
     free(row_sum);
@@ -216,11 +218,21 @@ int getNSpecialElement(matrix m) {
 
 // 12
 position getLeftMin(matrix m) {
-
+    position p_min = getMinValuePos(m);
+    return p_min;
 }
 
 void swapPenultimateRow(matrix m, int n) {
-
+    assert(m.nCols > 1);
+    int i = 0, j = 0;
+    position p_min = getLeftMin(m);
+    while (i < m.nRows && j < m.nCols) {
+        int temp = m.values[m.nRows - 2][j];
+        m.values[m.nRows - 2][j] = m.values[i][p_min.colIndex];
+        m.values[i][p_min.colIndex] =  temp;
+        i++;
+        j++;
+    }
 }
 
 // 13
@@ -238,15 +250,33 @@ int countNonDescendingRowsMatrices(matrix *ms, int nMatrix) {
 
 // 14
 int countValues(const int *a, int n, int value) {
-
+    int counter = 0;
+    for (int i = 0; i < n; i++) {
+        if (a[i] == value)
+            counter++;
+    }
+    return counter;
 }
 
 int countZeroRows(matrix m) {
-
+    int counter = 0;
+    for (int i = 0; i < m.nRows; i++) {
+        if (countValues(m.values[i], m.nCols, 0) == m.nCols)
+            counter++;
+    }
+    return counter;
 }
 
 void printMatrixWithMaxZeroRows(matrix *ms, int nMatrix) {
-
+    int max_zero_rows = 0;
+    for (int i = 0; i < nMatrix; i++) {
+        if (countZeroRows(ms[i]) > max_zero_rows)
+            max_zero_rows = countZeroRows(ms[i]);
+    }
+    for (int j = 0; j < nMatrix; j ++) {
+        if (countZeroRows(ms[j]) == max_zero_rows)
+            outputMatrix(ms[j]);
+    }
 }
 
 // 15 Дан массив целочисленных квадратных матриц.
