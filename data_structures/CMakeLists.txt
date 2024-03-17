@@ -8,3 +8,4 @@ add_library(data_structures
 )
 
 target_link_libraries(data_structures algorithms)
+
