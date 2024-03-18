@@ -3,7 +3,8 @@ project(university C)
 
 set(CMAKE_C_STANDARD 11)
 
-add_executable(university main.c)
+add_executable(university main.c
+        main.c)
 add_subdirectory(libs)
 target_link_libraries(university data_structures)
 target_link_libraries(university algorithms)
