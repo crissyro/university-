@@ -1,0 +1,21 @@
+# ninja log v5
+11	280	7321983525615508	CMakeFiles/university.dir/main.c.obj	49af67b479d93e2b
+53	454	7321983527415842	libs/data_structures/CMakeFiles/data_structures.dir/unorderedset/unorderedset.c.obj	f1eaca29d18b3c50
+1	211	7324471217852952	libs/string_/CMakeFiles/string_.dir/string_/string_.c.obj	4e2fc6c624fb469f
+863	1105	7321983533948620	university.exe	eea5dcee54d87332
+30	366	7321983526523079	libs/data_structures/CMakeFiles/data_structures.dir/bitset/bitset.c.obj	7a52e49171eaaa52
+410	546	7321983528383240	libs/algorithms/CMakeFiles/algorithms.dir/algorithm.c.obj	10d3c2af3025b454
+120	502	7321983527854685	libs/data_structures/CMakeFiles/data_structures.dir/vector/vector.c.obj	d0ac243349691bfd
+281	559	7321983528522876	libs/data_structures/CMakeFiles/data_structures.dir/matrix/matrix.c.obj	da43de65e7b6a534
+68	492	7321983527754953	libs/data_structures/CMakeFiles/data_structures.dir/orderedset/orderedset.c.obj	e5e851cc33230bce
+366	564	7321983528572745	libs/algorithms/CMakeFiles/algorithms.dir/array/array.c.obj	1f4a4c7b54992cbf
+41	410	7321983526961900	libs/data_structures/CMakeFiles/data_structures.dir/vector/vector_void.c.obj	63e308cb785d88dc
+564	694	7321983529899427	libs/algorithms/libalgorithms.a	56274bb85b86e754
+695	863	7321983531574686	libs/data_structures/libdata_structures.a	2be72d9e465ae401
+4	229	7321304735902126	CMakeFiles/using_matrix.dir/libs/tests/using_matrix.c.obj	bfa442e235bfc51
+2	297	7324576512480840	build.ninja	dd897668c852f5f1
+3	308	7322180463793262	CMakeFiles/using_matrix_tests.dir/libs/tests/using_matrix_tests.c.obj	1aaa27d5c8437d6c
+308	462	7322180465311477	using_matrix_tests.exe	e3a52dfcb40f892e
+211	402	7324471219787678	libs/string_/libstring_.a	efea00e04db1dcf8
+6	491	7324577022601689	libs/string_/CMakeFiles/string_.dir/string_/string_.c.obj	4e2fc6c624fb469f
+494	688	7324577024628811	libs/string_/libstring_.a	efea00e04db1dcf8
