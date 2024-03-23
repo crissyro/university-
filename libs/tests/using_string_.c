@@ -1,5 +1,4 @@
 #include "../string_/string_/string_.c"
-#include <string.h>
 #include <malloc.h>
 
 
@@ -22,27 +21,17 @@ void removeNonLetters(char *s) {
 // 2 Сократить количество пробелов между словами данного предложения до
 //одного
 
-void removeExtraSpaces(char *s) {
-    char *src = s;
-    char *dst = s;
-    int spaceCount = 0;
-
-    while (*src) {
-        if (*src == ' ') {
-            spaceCount++;
-            if (spaceCount <= 1) {
-                *dst = *src;
-                dst++;
-            }
-        } else {
-            *dst = *src;
-            dst++;
-            spaceCount = 0;
+void removeExtraSpaces(char *beginSource, char *endSource, char *beginDestination) {
+    while (beginSource != endSource) {
+        if (!isspace(*beginSource) || !isspace(*(beginSource + 1))) {
+            *beginDestination = *beginSource;
+            beginDestination++;
         }
-        src++;
+        beginSource++;
     }
-    *dst = '\0';
+    *beginDestination= '\0';
 }
+
 
 // 3  преобразовать строку таким образом, чтобы цифры
 //каждого слова были перенесены в начало слова и изменить порядок следования
@@ -107,37 +96,62 @@ void digitsReplaceSpace(char *s) {
 
 // 5 Заменить все вхождения слова 𝑤1 на слово 𝑤2
 
+int strncmp(const char *str1, const char *str2, size_t n) {
+    char *end = str1 + n;
+    int result = 0;
+
+    for (; result == 0 && str1 != end && (*str1 || *str2); result = *(str1++) - *(str2++));
+
+    return result;
+}
+
 void replace(char *source, char *w1, char *w2) {
-    size_t w1_size = strlen_(w1);
-    size_t w2_size = strlen_(w2);
-    WordDescriptor word1 = {w1, w1 + w1_size};
-    WordDescriptor word2 = {w2, w2 + w2_size};
-    char *read_p, *rec_p;
-    if (w1_size >= w2_size) {
-        read_p = source;
-        rec_p = source;
+    size_t w1Size = strlen_(w1);
+    size_t w2Size = strlen_(w2);
+
+    WordDescriptor word1 = {w1, w1 + w1Size};
+    WordDescriptor word2 = {w2, w2 + w2Size};
+
+    char *readPtr, *recPtr;
+
+    if (w1Size >= w2Size) {
+        readPtr = source;
+        recPtr = source;
     } else {
-        copy(source, getEndOfString(source), _stringBuffer);
-        read_p = _stringBuffer;
-        rec_p = source;
+        copy(source, getEndOfString(source) + 1, _stringBuffer);
+        readPtr = _stringBuffer;
+        recPtr = source;
     }
-    while (*read_p != '\0') {
-        if (strncmp(read_p, word1.begin, w1_size) == 0) {
-            copy(word2.begin, word2.end, rec_p);
-            read_p += w1_size;
-            rec_p += w2_size;
+
+    while (*readPtr != '\0') {
+        if (strncmp(readPtr, w1, w1Size) == 0) {
+            copy(word2.begin, word2.end, recPtr);
+            readPtr += w1Size;
+            recPtr += w2Size;
         } else {
-            *rec_p = *read_p;
-            read_p++;
-            rec_p++;
+            *recPtr = *readPtr;
+            readPtr++;
+            recPtr++;
         }
     }
-    *rec_p = '\0';
+    *recPtr = '\0';
 }
 
 // 6 Определить,
 // упорядочены ли лексикографически слова данного предложения.
 
+int is_Sorted_Words(char *s) {
+    WordDescriptor w1;
+    WordDescriptor w2;
+    while (getWord(s,&w1)) {
+        if (getWord(w1.end, &w2)) {
+               if (*w1.begin > *w2.begin)
+                   return 0;
+           }
+        s = w1.end;
+    }
+    return 1;
+}
 
 // 7 Вывести слова данной строки в
 // обратном порядке по одному в строке экрана
@@ -158,8 +172,9 @@ void replace(char *source, char *w1, char *w2) {
 
 // 10 Преобразовать строку,
 // изменив порядок следования слов в строке на обратный
+char *recerse_Words(const char *s) {
 
-
+}
 
 // 11 Вывести слово данной строки, предшествующее первому из слов,
 // содержащих букву "а".
