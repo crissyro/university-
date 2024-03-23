@@ -26,7 +26,7 @@ typedef struct BagOfWords {
     size_t size;
 } BagOfWords;
 
-char _stringBuffer[MAX_STRING_SIZE + 1];
+char _stringBuffer[MAX_STRING_SIZE];
 BagOfWords _bag;
 BagOfWords _bag2;
 

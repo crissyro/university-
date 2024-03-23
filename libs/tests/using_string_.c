@@ -78,21 +78,29 @@ void digitToStart(char *beginString) {
 
 // 4 Преобразовать строку, заменяя каждую цифру соответствующим ей числом
 //пробелов.
-void replace_Digits_With_Spaces(char *input) {
-    char buffer[MAX_STRING_SIZE];
-    int buffer_index = 0;
-    for (int i = 0; i < strlen_(input); i++) {
-        if (isdigit(input[i])) {
-            int num_spaces = input[i] - '0';
-            for (int j = 0; j < num_spaces; j++) {
-                buffer[buffer_index++] = ' ';
-            }
-        } else
-            buffer[buffer_index++] = input[i];
+char *digitReplaceSpace(char *s, char *prtWrite ) {
+    for (int i = 0; i < *s - 48; ++i) {
+        *prtWrite = ' ';
+        prtWrite++;
     }
-    buffer[buffer_index] = '\0';
+    return prtWrite;
+}
 
-    printf("%s\n", buffer);
+void digitsReplaceSpace(char *s) {
+    char *ptrWrite = s;
+    char *ptrRead = _stringBuffer;
+    char *endStringBuffer = copy(s, getEndOfString(s) + 1,ptrRead);
+
+    while (ptrRead <= endStringBuffer) {
+        if (isdigit(*ptrRead)) {
+            ptrWrite = digitReplaceSpace(ptrRead, ptrWrite);
+        } else {
+            *ptrWrite = *ptrRead;
+            ptrWrite++;
+        }
+        ptrRead++;
+    }
+    *ptrWrite = '\0';
 }
 
 
@@ -151,16 +159,6 @@ void replace(char *source, char *w1, char *w2) {
 // 10 Преобразовать строку,
 // изменив порядок следования слов в строке на обратный
 
-char *functionConvert(const char *s) {
-    int size = strlen_(s);
-    char *temp = malloc(size);
-    int t_size = size--;
-
-    for (int i = 0; i < size; i++)
-        temp[i] = s[t_size-i];
-
-    return temp;
-}
 
 
 // 11 Вывести слово данной строки, предшествующее первому из слов,
