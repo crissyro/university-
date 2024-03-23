@@ -16,6 +16,13 @@ char *getEndOfString(char *source) {
     return end;
 }
 
+// 1 удалить из строки все пробельные символы
+void removeNonLetters(char *s) {
+    char *endSource = getEndOfString(s);
+    char *destination = copyIf(s, endSource, s, isgraph);
+    *destination = '\0';
+}
+
 
 // 2 Сократить количество пробелов между словами данного предложения до
 //одного
@@ -42,7 +49,6 @@ void removeExtraSpaces(char *s) {
     *dst = '\0';
 }
 
-
 // 3  преобразовать строку таким образом, чтобы цифры
 //каждого слова были перенесены в начало слова и изменить порядок следования
 //цифр в слове на обратный, а буквы – в конец слова, без изменения порядка
@@ -56,6 +62,24 @@ int getWord(char *beginSearch, WordDescriptor *word) {
     return 1;
 }
 
+void digitToStartWord(WordDescriptor word) {
+    char *endStringBuffer = copy(word.begin, word.end,
+                                 _stringBuffer);
+    char *recPosition = copyIfReverse(endStringBuffer - 1,
+                                      _stringBuffer - 1,
+                                      word.begin, isdigit);
+    copyIf(_stringBuffer, endStringBuffer, recPosition, isalpha);
+}
+
+void digitToStart(char *beginString) {
+    char *beginSearch = beginString;
+    WordDescriptor word;
+    while (getWord(beginSearch, &word)) {
+        digitToStartWord(word);
+        beginSearch = word.end;
+    }
+
+}
 
 // 4 Преобразовать строку, заменяя каждую цифру соответствующим ей числом
 //пробелов.
