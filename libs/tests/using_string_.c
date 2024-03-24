@@ -155,14 +155,43 @@ int is_Sorted_Words(char *s) {
 
 // 7 Вывести слова данной строки в
 // обратном порядке по одному в строке экрана
+void getBagOfWords(BagOfWords *bag, char *s) {
+    char *readPtr = s;
+    WordDescriptor word;
+    for (int i = 0; getWord(readPtr, &word); i++) {
+        bag->words[i].begin = word.begin;
+        bag->words[i].end = word.end;
+        bag->size = i;
+    }
 
-
+}
 
 // 8 В данной строке соседние слова разделены запятыми.
 // Определить количество слов-палиндромов.
+int isPakindromeWorld(WordDescriptor *word) {
+    int word_len = word->end - word->begin;
+    for (int i = 0; i < word_len/2; ++i) {
+        if ( *(word->begin + i) != *(word->end - i - 1) ) {
+            return 0;
+        }
+    }
+    return 1;
+}
 
+int GetCountPalindromesInString(char *s) {
+    replace(s, ",", " ");
+    WordDescriptor word;
+    char *BeginWord = s;
+    int counter = 0;
 
-
+    while (getWord(BeginWord,&word)) {
+        if (isPakindromeWorld(&word)) {
+            counter++;
+        }
+        BeginWord = word.end;
+    }
+    return  counter;
+}
 // 9 Даны две строки. Получить строку, в которой чередуются слова
 // первой и второй строки. Если в одной из строк число слов больше,
 // чем в другой, то оставшиеся слова этой строки
