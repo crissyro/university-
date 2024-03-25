@@ -196,8 +196,27 @@ int GetCountPalindromesInString(char *s) {
 // первой и второй строки. Если в одной из строк число слов больше,
 // чем в другой, то оставшиеся слова этой строки
 // должны быть дописаны в строку-результат
+void *get_String_From2(char *s1, char *s2, char *res) {
+    WordDescriptor word1, word2;
+    int is_w1, is_w2;
+    char *begin_1 = s1, *begin_2= s2;
+    char* write_p = res;
 
+    while ((is_w1 = getWord(begin_1, &word1)), (is_w2 = getWord(begin_2, &word2)), is_w1 || is_w2) {
+        if (is_w1) {
+            write_p = copy(word1.begin, word1.end, write_p);
+            *write_p++ = ' ';
+            begin_1 = word1.end;
+        }
 
+        if (is_w2) {
+            write_p = copy(word2.begin, word2.end, write_p);;
+            *write_p++ = ' ';
+            begin_2 = word2.end;
+        }
+    }
+    *(--write_p) = '\0';
+}
 
 // 10 Преобразовать строку,
 // изменив порядок следования слов в строке на обратный
