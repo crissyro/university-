@@ -220,10 +220,31 @@ void *get_String_From2(char *s1, char *s2, char *res) {
 
 // 10 Преобразовать строку,
 // изменив порядок следования слов в строке на обратный
-char *recerse_Words(const char *s) {
+int getWordReverse(char *rbegin, char *rend, WordDescriptor *word) {
+    word->end = findNonSpaceReverse(rbegin, rend);
+    if (word->end == rend)
+        return 0;
+    word->begin = findSpaceReverse(rbegin- 1, rend);
 
+    return 1;
 }
 
+void getStringRevers(char *s) {
+    WordDescriptor word;
+
+    char *write_p = s;
+    char *rend = _stringBuffer;
+    char *r_begin = copy(s, getEndOfString(s) + 1, _stringBuffer);
+
+
+    while (getWordReverse(r_begin, rend, &word)) {
+        write_p = copy(word.begin, word.end, write_p);
+        r_begin = word.begin;
+        *write_p++ = ' ';
+    }
+    *(--write_p) = '\0';
+    replace(s, "  ", " ");
+}
 // 11 Вывести слово данной строки, предшествующее первому из слов,
 // содержащих букву "а".
 
