@@ -248,10 +248,31 @@ void getStringRevers(char *s) {
 // 11 Вывести слово данной строки, предшествующее первому из слов,
 // содержащих букву "а".
 
-WordBeforeFirstWordWithAReturnCode getWordBeforeFirstWordWithA(char *s, WordDescriptor *w) {
-
+int SymbolIn(char *begin, char *end, int ch) {
+    while (begin != end && (toupper(*begin)) != toupper(ch))
+        begin++;
+    return begin != end;
 }
 
+WordBeforeFirstWordWithAReturnCode getWordBeforeFirstWordWithA(char *s, WordDescriptor *w) {
+    int isWordInString = getWord(s, w) == 1;
+
+    if (isWordInString && !SymbolIn(w->begin, w->end, 'a')) {
+        WordDescriptor copy_w;
+        if (getWord(w->end, &copy_w) == 1) {
+            if (SymbolIn(copy_w.begin, copy_w.end, 'a'))
+                return WORD_FOUND;
+            else
+                return getWordBeforeFirstWordWithA(w->end, w);
+
+        } else
+            return NOT_FOUND_A_WORD_WITH_A;
+
+    } else if (isWordInString)
+        return FIRST_WORD_WITH_A;
+    else
+        return EMPTY_STRING;
+}
 
 // 12 Даны две строки. Определить последнее из слов первой строки,
 // которое есть во второй строке.
