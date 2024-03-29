@@ -290,9 +290,8 @@ WordDescriptor lastWordInFirstStringInSecondString(char *s1, char *s2) {
         WordDescriptor word1 = _bag.words[_bag.size - i - 1];
         for (int j = 0; j < _bag2.size; ++j) {
             WordDescriptor word2 = _bag2.words[j];
-            if (!strncmp(word1.begin, word2.begin,word1.end - word1.begin )) {
+            if (!strncmp(word1.begin, word2.begin,word1.end - word1.begin ))
                 return _bag.words[_bag.size - i - 1];
-            }
         }
     }
     WordDescriptor res;
@@ -303,7 +302,20 @@ WordDescriptor lastWordInFirstStringInSecondString(char *s1, char *s2) {
 
 
 // 13 Определить, есть ли в данной строке одинаковые слова.
-
+int UniqueWordsInString(char *s) {
+    BagOfWords bag;
+    getBagOfWords(&bag, s);
+    for (int i = 0; i < bag.size; ++i) {
+        for (int j = i + 1; j < bag.size; ++j) {
+            int size_word_1 = bag.words[i].end - bag.words[i].begin;
+            int size_word_2 = bag.words[j].end - bag.words[j].begin;
+            int max_size_words = size_word_1 > size_word_2 ? size_word_1 : size_word_2;
+            if (!strncmp(bag.words[i].begin, bag.words[j].begin, max_size_words))
+                return 0;
+        }
+    }
+    return 1;
+}
 
 
 // 14 Определить, есть ли в данной строке пара слов,
