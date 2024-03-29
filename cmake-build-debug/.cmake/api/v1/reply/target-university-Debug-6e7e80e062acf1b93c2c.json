@@ -2,10 +2,7 @@
 	"artifacts" : 
 	[
 		{
-			"path" : "university.exe"
-		},
-		{
-			"path" : "university.pdb"
+			"path" : "university"
 		}
 	],
 	"backtrace" : 1,
@@ -105,28 +102,24 @@
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "libs\\data_structures\\libdata_structures.a",
+				"fragment" : "libs/data_structures/libdata_structures.a",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 3,
-				"fragment" : "libs\\algorithms\\libalgorithms.a",
+				"fragment" : "libs/algorithms/libalgorithms.a",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 4,
-				"fragment" : "libs\\string_\\libstring_.a",
-				"role" : "libraries"
-			},
-			{
-				"fragment" : "-lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32",
+				"fragment" : "libs/string_/libstring_.a",
 				"role" : "libraries"
 			}
 		],
 		"language" : "C"
 	},
 	"name" : "university",
-	"nameOnDisk" : "university.exe",
+	"nameOnDisk" : "university",
 	"paths" : 
 	{
 		"build" : ".",

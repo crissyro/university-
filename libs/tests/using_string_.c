@@ -276,7 +276,30 @@ WordBeforeFirstWordWithAReturnCode getWordBeforeFirstWordWithA(char *s, WordDesc
 
 // 12 Даны две строки. Определить последнее из слов первой строки,
 // которое есть во второй строке.
+void wordDescriptorToString(WordDescriptor word,char *string) {
+    char *end = copy(word.begin, word.end, string);
+    *end = '\0';
+}
 
+
+WordDescriptor lastWordInFirstStringInSecondString(char *s1, char *s2) {
+    getBagOfWords(&_bag,s1 );
+    getBagOfWords(&_bag2,s2 );
+
+    for (int i = 0; i < _bag.size; ++i) {
+        WordDescriptor word1 = _bag.words[_bag.size - i - 1];
+        for (int j = 0; j < _bag2.size; ++j) {
+            WordDescriptor word2 = _bag2.words[j];
+            if (!strncmp(word1.begin, word2.begin,word1.end - word1.begin )) {
+                return _bag.words[_bag.size - i - 1];
+            }
+        }
+    }
+    WordDescriptor res;
+    char *res_s = "EMPTY";
+    getWord(res_s, &res);
+    return res;
+}
 
 
 // 13 Определить, есть ли в данной строке одинаковые слова.

@@ -3,6 +3,7 @@
 
 # include <stddef.h>
 
+
 // ввод массива data размера n
 void inputArray_ (int *a , size_t n ) ;
 // вывод массива data размера n

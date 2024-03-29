@@ -1,5 +1,5 @@
 #include "vector.h"
-
+#include <stdlib.h>
 
 //– Если ОС не смогла выделить необходимый фрагмент памяти, вывести
 //сообщение в поток ошибок и прервать выполнение программы
@@ -10,6 +10,7 @@ void check_Memory_(vector *v) {
         exit(1);
     }
 }
+
 
 bool isEmpty(vector *v) {
     return v->size == 0 ? true : false;

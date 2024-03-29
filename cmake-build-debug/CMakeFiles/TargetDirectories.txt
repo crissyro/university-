@@ -1,14 +1,14 @@
-C:/Users/Мороз Роман/CLionProjects/university/cmake-build-debug/CMakeFiles/university.dir
-C:/Users/Мороз Роман/CLionProjects/university/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/Мороз Роман/CLionProjects/university/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-C:/Users/Мороз Роман/CLionProjects/university/cmake-build-debug/libs/CMakeFiles/edit_cache.dir
-C:/Users/Мороз Роман/CLionProjects/university/cmake-build-debug/libs/CMakeFiles/rebuild_cache.dir
-C:/Users/Мороз Роман/CLionProjects/university/cmake-build-debug/libs/data_structures/CMakeFiles/data_structures.dir
-C:/Users/Мороз Роман/CLionProjects/university/cmake-build-debug/libs/data_structures/CMakeFiles/edit_cache.dir
-C:/Users/Мороз Роман/CLionProjects/university/cmake-build-debug/libs/data_structures/CMakeFiles/rebuild_cache.dir
-C:/Users/Мороз Роман/CLionProjects/university/cmake-build-debug/libs/algorithms/CMakeFiles/algorithms.dir
-C:/Users/Мороз Роман/CLionProjects/university/cmake-build-debug/libs/algorithms/CMakeFiles/edit_cache.dir
-C:/Users/Мороз Роман/CLionProjects/university/cmake-build-debug/libs/algorithms/CMakeFiles/rebuild_cache.dir
-C:/Users/Мороз Роман/CLionProjects/university/cmake-build-debug/libs/string_/CMakeFiles/string_.dir
-C:/Users/Мороз Роман/CLionProjects/university/cmake-build-debug/libs/string_/CMakeFiles/edit_cache.dir
-C:/Users/Мороз Роман/CLionProjects/university/cmake-build-debug/libs/string_/CMakeFiles/rebuild_cache.dir
+/home/def24/CLionProjects/university/cmake-build-debug/CMakeFiles/university.dir
+/home/def24/CLionProjects/university/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/def24/CLionProjects/university/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/def24/CLionProjects/university/cmake-build-debug/libs/CMakeFiles/edit_cache.dir
+/home/def24/CLionProjects/university/cmake-build-debug/libs/CMakeFiles/rebuild_cache.dir
+/home/def24/CLionProjects/university/cmake-build-debug/libs/data_structures/CMakeFiles/data_structures.dir
+/home/def24/CLionProjects/university/cmake-build-debug/libs/data_structures/CMakeFiles/edit_cache.dir
+/home/def24/CLionProjects/university/cmake-build-debug/libs/data_structures/CMakeFiles/rebuild_cache.dir
+/home/def24/CLionProjects/university/cmake-build-debug/libs/algorithms/CMakeFiles/algorithms.dir
+/home/def24/CLionProjects/university/cmake-build-debug/libs/algorithms/CMakeFiles/edit_cache.dir
+/home/def24/CLionProjects/university/cmake-build-debug/libs/algorithms/CMakeFiles/rebuild_cache.dir
+/home/def24/CLionProjects/university/cmake-build-debug/libs/string_/CMakeFiles/string_.dir
+/home/def24/CLionProjects/university/cmake-build-debug/libs/string_/CMakeFiles/edit_cache.dir
+/home/def24/CLionProjects/university/cmake-build-debug/libs/string_/CMakeFiles/rebuild_cache.dir
