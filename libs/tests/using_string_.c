@@ -1,5 +1,5 @@
 #include "../string_/string_/string_.c"
-#include <malloc.h>
+#include <stdlib.h>
 
 
 char *getEndOfString(char *source) {
@@ -320,6 +320,30 @@ int UniqueWordsInString(char *s) {
 
 // 14 Определить, есть ли в данной строке пара слов,
 // составленных из одинакового набора букв.
+int compare_char(const void *a, const void *b) {
+    return (*(char *)a - *(char *)b);
+}
+
+int checkWordsInStringHaveCommonLetters(char *s) {
+    getBagOfWords(&_bag, s);
+    for (int i = 0; i < _bag.size; ++i) {
+        WordDescriptor word = _bag.words[i];
+        qsort(word.begin, word.end - word.begin, sizeof(char), compare_char);
+    }
+
+    for (int i = 0; i < _bag.size; ++i) {
+        for (int j = i + 1; j < _bag.size; ++j) {
+            int size_word_1 = _bag.words[i].end - _bag.words[i].begin;
+            int size_word_2 = _bag.words[j].end - _bag.words[j].begin;
+            int max_size_words = size_word_1 > size_word_2 ? size_word_1 : size_word_2;
+
+            if (!strncmp(_bag.words[i].begin, _bag.words[j].begin, max_size_words)) {
+                return 1;
+            }
+        }
+    }
+    return 0;
+}
 
 
 
