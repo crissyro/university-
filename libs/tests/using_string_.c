@@ -345,11 +345,25 @@ int checkWordsInStringHaveCommonLetters(char *s) {
     return 0;
 }
 
-
-
 // 15 Получить строку из слов данной строки,
 // которые отличны от последнего слова
+int getSizeWord(WordDescriptor word) {
+    return word.end - word.begin;
+}
 
+void GetStringWithoutLastWord(char *s,char *res) {
+    char *writePtr = res;
+    getBagOfWords(&_bag,s);
+    WordDescriptor last_word = _bag.words[_bag.size - 1];
+    int size_last_word  = getSizeWord(last_word);
+    for (int i = 0; i < _bag.size - 1; ++i) {
+        if (strncmp(_bag.words[i].begin, last_word.begin, size_last_word) != 0) {
+            writePtr = copy(_bag.words[i].begin, _bag.words[i].end, writePtr);
+            *(writePtr++) = ' ';
+        }
+    }
+    *(--writePtr) = '\0';
+}
 
 
 // 16 Даны две строки 𝑠1 и 𝑠2. Пусть 𝑤 – первое из слов строки 𝑠1,
