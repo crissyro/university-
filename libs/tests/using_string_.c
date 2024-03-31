@@ -1,6 +1,9 @@
 #include "../string_/string_/string_.c"
 #include <stdlib.h>
+#include "../data_structures/bitset/bitset.c"
 
+#define COUNT_LETTERS 26
+#define DIFFERENCE_CHAR 65
 
 char *getEndOfString(char *source) {
     char *end = source;
@@ -407,8 +410,6 @@ void DeletePalindromeInString(char *s) {
     *(--ptr_w) = '\0';
 }
 
-
-
 // 18 Даны две строки. Пусть 𝑛1 – число слов в первой строке,
 //// а 𝑛2 – во второй. Требуется дополнить строку,
 //// содержащую меньшее количество слов, последними
@@ -437,6 +438,21 @@ void addWordToLessString(char *s1, char *s2) {
     *ptr_w = '\0';
 }
 
-
 // 19 Определить, входит ли в
 // данную строку каждая буква данного слова
+int allSymbolsWordInString(char *s, char *word) {
+    bitset letters_s = bitset_create(COUNT_LETTERS);
+    bitset letters_word = bitset_create(COUNT_LETTERS);
+    for (int i = 0; i < strlen_(s); ++i) {
+        char symbol = toupper(s[i]);
+        if (isalpha(symbol))
+            bitset_insert(&letters_s, (symbol - DIFFERENCE_CHAR));
+    }
+    for (int i = 0; i < strlen_(word); ++i) {
+        char symbol = toupper(word[i]);
+        if (isalpha(symbol))
+            bitset_insert(&letters_word, (int) (symbol - DIFFERENCE_CHAR));
+    }
+    bitset res = bitset_intersection(letters_s, letters_word);
+    return bitset_isEqual(res, letters_word);
+}
