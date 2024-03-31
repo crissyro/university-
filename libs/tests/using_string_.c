@@ -369,7 +369,29 @@ void GetStringWithoutLastWord(char *s,char *res) {
 // 16 Даны две строки 𝑠1 и 𝑠2. Пусть 𝑤 – первое из слов строки 𝑠1,
 // которое есть и в строке 𝑠2.
 // Найти слово, предшествующее первому вхождению 𝑤 в 𝑠1
+int ThisWordInBag(BagOfWords bag, WordDescriptor word) {
+    for (int i = 0; i < bag.size; i++) {
+        if (strncmp(word.begin, bag.words[i].begin, getSizeWord(word)) == 0)
+            return 1;
+    }
+    return 0;
+}
 
+WordDescriptor GetWordBeforeUnionWord(char *s1, char *s2) {
+    getBagOfWords(&_bag, s1);
+    getBagOfWords(&_bag2, s2);
+
+    for (int i = 0; i < _bag.size; ++i) {
+        if (ThisWordInBag(_bag2, _bag.words[i])) {
+            if (i != 0)
+                return  _bag.words[i  - 1];
+            else
+                continue;
+        }
+    }
+    WordDescriptor error_word = {NULL, NULL};
+    return error_word;
+}
 
 
 // 17
