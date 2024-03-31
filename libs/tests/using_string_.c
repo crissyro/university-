@@ -285,7 +285,6 @@ void wordDescriptorToString(WordDescriptor word,char *string) {
 WordDescriptor lastWordInFirstStringInSecondString(char *s1, char *s2) {
     getBagOfWords(&_bag,s1 );
     getBagOfWords(&_bag2,s2 );
-
     for (int i = 0; i < _bag.size; ++i) {
         WordDescriptor word1 = _bag.words[_bag.size - i - 1];
         for (int j = 0; j < _bag2.size; ++j) {
@@ -330,7 +329,6 @@ int checkWordsInStringHaveCommonLetters(char *s) {
         WordDescriptor word = _bag.words[i];
         qsort(word.begin, word.end - word.begin, sizeof(char), compare_char);
     }
-
     for (int i = 0; i < _bag.size; ++i) {
         for (int j = i + 1; j < _bag.size; ++j) {
             int size_word_1 = _bag.words[i].end - _bag.words[i].begin;
@@ -352,17 +350,17 @@ int getSizeWord(WordDescriptor word) {
 }
 
 void GetStringWithoutLastWord(char *s,char *res) {
-    char *writePtr = res;
+    char *ptr_w = res;
     getBagOfWords(&_bag,s);
     WordDescriptor last_word = _bag.words[_bag.size - 1];
     int size_last_word  = getSizeWord(last_word);
     for (int i = 0; i < _bag.size - 1; ++i) {
         if (strncmp(_bag.words[i].begin, last_word.begin, size_last_word) != 0) {
-            writePtr = copy(_bag.words[i].begin, _bag.words[i].end, writePtr);
-            *(writePtr++) = ' ';
+            ptr_w = copy(_bag.words[i].begin, _bag.words[i].end, ptr_w);
+            *(ptr_w++) = ' ';
         }
     }
-    *(--writePtr) = '\0';
+    *(--ptr_w) = '\0';
 }
 
 
@@ -395,6 +393,19 @@ WordDescriptor GetWordBeforeUnionWord(char *s1, char *s2) {
 
 
 // 17
+void DeletePalindromeInString(char *s) {
+    char *ptr_w = s;
+    char *ptr_r = _stringBuffer;
+    copy(s, getEndOfString(s) + 1, ptr_r);
+    getBagOfWords(&_bag, ptr_r);
+    for (int i = 0; i < _bag.size; ++i) {
+        if (!isPakindromeWorld(&_bag.words[i])) {
+            ptr_w = copy(_bag.words[i].begin, _bag.words[i].end, ptr_w);
+            *(ptr_w++) = ' ';
+        }
+    }
+    *(--ptr_w) = '\0';
+}
 
 
 
@@ -402,7 +413,29 @@ WordDescriptor GetWordBeforeUnionWord(char *s1, char *s2) {
 //// а 𝑛2 – во второй. Требуется дополнить строку,
 //// содержащую меньшее количество слов, последними
 ////словами строки, в которой содержится большее количество слов
-
+void addWordToLessString(char *s1, char *s2) {
+    getBagOfWords(&_bag, s1);
+    getBagOfWords(&_bag2, s2);
+    char *ptr_w;
+    int IsString1More = _bag.size > _bag2.size ? 1 : 0;
+    size_t difSize = IsString1More ? _bag.size - _bag2.size : _bag2.size - _bag.size;
+    if (IsString1More) {
+        ptr_w = _bag2.words[_bag2.size - 1].end;
+        for (int i = 0; i < difSize; ++i) {
+            *(ptr_w++) = ' ';
+            ptr_w = copy(_bag.words[_bag2.size + i ].begin, _bag.words[_bag2.size + i].end, \
+            ptr_w);
+        }
+    } else {
+        ptr_w = _bag.words[_bag.size - 1].end;
+        for (int i = 0; i < difSize; ++i) {
+            *(ptr_w++) = ' ';
+            ptr_w = copy(_bag2.words[_bag.size + i].begin, _bag2.words[_bag.size + i].end, \
+            ptr_w);
+        }
+    }
+    *ptr_w = '\0';
+}
 
 
 // 19 Определить, входит ли в
