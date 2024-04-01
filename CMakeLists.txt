@@ -11,3 +11,4 @@ target_link_libraries(university algorithms)
 target_link_libraries(university  string_)
 
 
+add_executable(work_with_files work_with_files.c)
