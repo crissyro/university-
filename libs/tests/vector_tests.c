@@ -2,9 +2,9 @@
 
 
 void test_create_vector_1() {
-    vector v = createVector(3);
+    vector v = createVector(4);
     assert(v.size == 0);
-    assert(v.capacity == 3);
+    assert(v.capacity == 4);
     deleteVector(&v);
 }
 
