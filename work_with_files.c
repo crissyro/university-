@@ -103,7 +103,50 @@ void task1() {
     OutputMatricesInFile(way, &file, count_matrices);
 }
 
+
+void GenerateRandomFloatNumbers(FILE *file, int count) {
+    for (int i = 0; i < count; i++) {
+        double number = ((double)rand() / RAND_MAX) * 1000.0;
+        fprintf(file, "%lf\n", number);
+    }
+}
+
+void ReadFloatNumbers(FILE *file, double numbers[], int *count) {
+    *count = 0;
+    while (fscanf(file, "%lf", &numbers[*count]) == 1)
+        (*count)++;
+
+}
+
+void WriteFloatNumbers(FILE *file, double numbers[], int count) {
+    for (int i = 0; i < count; i++)
+        fprintf(file, "%.2f\n", numbers[i]);
+
+}
+
+void task2() {
+    int count_num = 10;
+    char *way_input = getWayByTasks("task2input.txt");
+    FILE *file_input = fopen(way_input, "w");
+    check_Correct_Open_File(file_input);
+    GenerateRandomFloatNumbers(file_input, count_num);
+    fclose(file_input);
+
+    double numbers[count_num];
+    fopen(way_input, "r");
+    check_Correct_Open_File(way_input);
+    ReadFloatNumbers(file_input, numbers, &count_num);
+    fclose(file_input);
+
+    char *way_output = getWayByTasks("task2output.txt");
+    FILE *file_output = fopen(way_output, "w");
+    check_Correct_Open_File(file_output);
+    WriteFloatNumbers(file_output, numbers, count_num);
+    fclose(file_output);
+}
+
 int main() {
-    task1();
+   // task1();
+    task2();
 }
 
