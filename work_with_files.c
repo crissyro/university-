@@ -5,6 +5,7 @@
 #include "libs/tests/using_string_.c"
 #include "libs/data_structures/matrix/matrix.c"
 #include "libs/data_structures/vector/vector.c"
+#include <time.h>
 
 
 void WriteMatricesBinaryFile(char *file_name, FILE *file, matrix *data,int count_matrices) {
@@ -125,6 +126,8 @@ void WriteFloatNumbers(FILE *file, double numbers[], int count) {
 }
 
 void task2() {
+    srand(time(NULL));
+
     int count_num = 10;
     char *way_input = getWayByTasks("task2input.txt");
     FILE *file_input = fopen(way_input, "w");
@@ -145,8 +148,83 @@ void task2() {
     fclose(file_output);
 }
 
+char generateRandomOperator() {
+    char operators[] = {'+', '-', '*', '/'};
+    return operators[rand() % 4];
+}
+
+void WriteGenerateExpression(FILE *file) {
+    srand(time(NULL));
+
+    int num1 = (int) rand() % 9 + 1;
+    int num2 = (int) rand() % 9 + 1;
+    int num3 = (int) rand() % 9 + 1;
+
+    int operator1  = generateRandomOperator();
+    int operator2  = generateRandomOperator();
+
+    if ((int) rand() % 2)
+        fprintf(file, "%d %c %d %c %d", num1, operator1, num2, operator2, num3);
+    else
+        fprintf(file, "%d %c %d", num1, operator1, num2);
+}
+
+int applyOperator(char operator, int operand1, int operand2) {
+    switch (operator) {
+        case '+':
+            return operand1 + operand2;
+        case '-':
+            return operand1 - operand2;
+        case '*':
+            return operand1 * operand2;
+        case '/':
+            return operand1 / operand2;
+    }
+}
+
+int CalculateExpressionFromFile(FILE *file) {
+    int num1, num2, num3, res;
+    num3 = 0;
+    char operator1, operator2;
+
+    fscanf(file, "%d %c %d %c %d", &num1, &operator1, &num2, &operator2, &num3);
+
+    if (num3 == 0) 
+        res = applyOperator(operator1, num1, num2);
+    else {
+        if (operator1 == '/' || operator1 == '*')
+            res = applyOperator(operator2, applyOperator(operator1, \
+            num1, num2), num3);
+        else 
+            res = applyOperator(operator1, num1, \
+            applyOperator(operator2, num2, num3));
+    }
+
+    return res;
+}
+
+void task3() {
+    srand(time(NULL));
+
+    char *way_input = getWayByTasks("task3.txt");
+    FILE *file = fopen(way_input, "w");
+    WriteGenerateExpression(file);
+    fclose(file);
+
+    fopen(way_input, "r");
+    int res =  CalculateExpressionFromFile(file);
+    fclose(file);
+
+    fopen(way_input, "a");
+    fprintf(file," = %d", res);
+    fclose(file);
+
+}
+
+
 int main() {
    // task1();
-    task2();
+   // task2();
+   // task3():
 }
 
