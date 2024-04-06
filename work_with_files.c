@@ -263,9 +263,65 @@ void printCorrectWords(char* inputFilename, char* outputFilename, char* sequence
 }
 
 void task4() {
-    srand(time(NULL));
     generateRandomWords("task4input.txt");
     printCorrectWords("task4input.txt", "task4output.txt", "a");
+}
+
+void generateRandomStrings(char* filename) {
+    char* way = getWayByTasks(filename);
+    FILE* file = fopen(way, "w");
+
+    char alphabet[] = " abcdefg hijklm nopqrst uvwxyz ";
+    int alphabet_length = strlen(alphabet);
+
+    srand(time(NULL));
+
+    for (int i = 0; i < MAX_N_WORDS_IN_STRING; i++) {
+        char word[50];
+        int word_length = rand() % (40) + 1;
+
+        for (int j = 0; j < word_length; j++) {
+            word[j] = alphabet[rand() % alphabet_length];
+        }
+
+        word[word_length] = '\0';
+        fprintf(file, "%s\n", word);
+    }
+
+    fclose(file);
+}
+
+void printMaxLenWordsInString(char* inputFilename, char* outputFilename) {
+    char* way_input = getWayByTasks(inputFilename);
+    FILE* file_input = fopen(way_input, "r");
+
+    char* way_output = getWayByTasks(outputFilename);
+    FILE* file_output = fopen(way_output, "w");
+
+    char s[50];
+    while (fgets(s, 50, file_input)) {
+        char *begin_search = s;
+        char res[50];
+        int max_len = 1;
+        WordDescriptor word;
+
+        while (getWord(begin_search, &word)) {
+            if ((word.end - word.begin + 1) >= max_len) {
+                wordDescriptorToString(word, res);
+                max_len = (word.end - word.begin + 1);
+            }
+            begin_search = word.end;
+        }
+        fprintf(file_output, "%s\n", res);
+    }
+
+    fclose(file_input);
+    fclose(file_output);
+}
+
+void task5() {
+    generateRandomStrings("task5input.txt");
+    printMaxLenWordsInString("task5input.txt", "task5output.txt");
 }
 
 int main() {
@@ -273,5 +329,6 @@ int main() {
    task2();
    task3();
    task4();
+   task5();
 }
 
