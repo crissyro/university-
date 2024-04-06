@@ -221,10 +221,57 @@ void task3() {
 
 }
 
+void generateRandomWords(const char* filename) {
+    char* way = getWayByTasks(filename);
+    FILE* file = fopen(way, "w");
+
+    char alphabet[] = "abcdefghijklmnopqrstuvwxyz";
+    int alphabet_length = strlen(alphabet);
+
+    srand(time(NULL));
+
+    for (int i = 0; i < MAX_N_WORDS_IN_STRING; i++) {
+        char word[10];
+        int word_length = rand() % (9) + 1;
+
+        for (int j = 0; j < word_length; j++)
+            word[j] = alphabet[rand() % alphabet_length];
+
+        word[word_length] = '\0';
+        fprintf(file, "%s\n", word);
+    }
+
+    fclose(file);
+}
+
+void printCorrectWords(char* inputFilename, char* outputFilename, char* sequence) {
+    char* way_input = getWayByTasks(inputFilename);
+    FILE* file_input = fopen(way_input, "r");
+
+    char* way_output = getWayByTasks(outputFilename);
+    FILE* file_output = fopen(way_output, "w");
+
+    char word[MAX_N_WORDS_IN_STRING];
+
+    while (fscanf(file_input, "%s", word) == 1) {
+        if (strstr(word, sequence))
+            fprintf(file_output, "%s\n", word);
+    }
+
+    fclose(file_input);
+    fclose(file_output);
+}
+
+void task4() {
+    srand(time(NULL));
+    generateRandomWords("task4input.txt");
+    printCorrectWords("task4input.txt", "task4output.txt", "a");
+}
 
 int main() {
-   // task1();
-   // task2();
-   // task3():
+   task1();
+   task2();
+   task3();
+   task4();
 }
 
