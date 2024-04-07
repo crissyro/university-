@@ -6,7 +6,7 @@
 #include "libs/data_structures/matrix/matrix.c"
 #include "libs/data_structures/vector/vector.c"
 #include <time.h>
-
+#include <math.h>
 
 void WriteMatricesBinaryFile(char *file_name, FILE *file, matrix *data,int count_matrices) {
     char *c;
@@ -324,11 +324,138 @@ void task5() {
     printMaxLenWordsInString("task5input.txt", "task5output.txt");
 }
 
+typedef struct Polinomial {
+    int pow;
+    int k;
+} Polinomial;
+
+
+void freePolinomial(Polinomial **array, int nPalinom) {
+    for (int i = 0; i < nPalinom; i++) {
+        free(array[i]);
+    }
+    free(array);
+}
+
+
+int generateRandomSign() {
+    return rand() % 2 == 0 ? 1 : -1;
+}
+
+Polinomial **getMemPalinomeKiller(int nPalinomial, int nMember) {
+    Polinomial **array = (Polinomial **) malloc(nPalinomial * sizeof(Polinomial *));
+    for (int i = 0; i < nPalinomial; i++) {
+        array[i] = (Polinomial *) malloc(nMember * sizeof(Polinomial));
+    }
+    return (array);
+}
+
+void generatePolinomialArray(char *filename, int nPalinomial, int nMember) {
+    srand(time(NULL));
+    Polinomial **array = getMemPalinomeKiller(nPalinomial, nMember);
+
+    for (int i = 0; i < nPalinomial; ++i) {
+        for (int j = 0; j < nMember; ++j) {
+            array[i][j].pow = j;
+            array[i][j].k = generateRandomSign() * rand() % 9 + 1;
+        }
+    }
+
+    char *way = getWayByTasks(filename);
+    FILE *file = fopen(way, "wb");
+
+    char *c = (char *) array;
+    for (int i = 0; i < sizeof(Polinomial) * nPalinomial * nMember * 2; i++) {
+        putc(*c++, file);
+    }
+    fclose(file);
+    freePolinomial(array, nPalinomial);
+}
+
+
+
+void printCorrectPalinomial(char *filename, int x, int nPalinomial, int nMember) {
+    char *c;
+    int counter;
+    Polinomial **array = getMemPalinomeKiller(nPalinomial, nMember);
+    char *way = getWayByTasks(filename);
+    FILE *file = fopen(way, "rb");
+    c = (char *) array;
+
+    while ((counter = getc(file)) != EOF) {
+        *c = counter;
+        c++;
+    }
+    fclose(file);
+
+    for (int i = 0; i < nPalinomial; ++i) {
+        int res = 0;
+        for (int j = 0; j < nMember; ++j) {
+            res += (int) pow(x, array[i][j].pow) * array[i][j].k;
+
+        }
+        if (res == 0) {
+            for (int j = 0; j < nMember; ++j) {
+                array[i][j].pow = 000;
+                array[i][j].k = 000;
+            }
+        }
+    }
+
+    file = fopen(way, "wb");
+    c = (char *) array;
+    for (int i = 0; i < sizeof(Polinomial) * nPalinomial * nMember * 2; i++) {
+        putc(*c++, file);
+    }
+    fclose(file);
+    freePolinomial(array, nPalinomial);
+
+}
+
+void printPalinomialWithFile(char *filename, int nPalinomial, int nMember) {
+    char *c;
+    int counter;
+    Polinomial **array = getMemPalinomeKiller(nPalinomial, nMember);
+    char *way = getWayByTasks(filename);
+    FILE *file = fopen(way, "rb");
+    c = (char *) array;
+
+    while ((counter = getc(file)) != EOF) {
+        *c = counter;
+        c++;
+    }
+    fclose(file);
+
+    for (int i = 0; i < nPalinomial; ++i) {
+        int res = 0;
+        for (int j = 0; j < nMember; ++j) {
+            printf("(%dx^%d)",array[i][j].k, array[i][j].pow);
+            if (j != nMember - 1) {
+                printf(" + ");
+            }
+
+        }
+        printf("= 0\n");
+    }
+    printf("\n");
+
+    freePolinomial(array, nPalinomial);
+}
+
+void task6() {
+    generatePolinomialArray("task6.txt", 10, 4);
+    printPalinomialWithFile("task6.txt", 10, 4);
+    printCorrectPalinomial("task6.txt", 1, 10, 4);
+    printPalinomialWithFile("task6.txt", 10, 4);
+
+}
+
 int main() {
    task1();
    task2();
    task3();
    task4();
    task5();
+   task6();
 }
 
