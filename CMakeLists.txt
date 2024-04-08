@@ -12,3 +12,4 @@ target_link_libraries(university  string_)
 
 
 add_executable(work_with_files work_with_files.c)
+add_executable(test_file_work.c test_file_work.c)
