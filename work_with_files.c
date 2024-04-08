@@ -17,7 +17,7 @@ void check_Correct_Open_File(FILE *f) {
 }
 
 
-void WriteMatricesBinaryFile(char *file_name, FILE *file, matrix *data,int count_matrices) {
+void WriteMatricesBinaryFile(char *file_name, FILE *file, matrix *data, int count_matrices) {
     char *c;
     file = fopen(file_name, "wb");
     check_Correct_Open_File(file);
@@ -99,11 +99,11 @@ void task1() {
 
                     8, 9, 0,
                     8, 9, 0,
-                    8, 9, 0 };
+                    8, 9, 0};
 
     matrix *matrix_array = createArrayOfMatrixFromArray(values, 3, 3, 3);
 
-    WriteMatricesBinaryFile(way, &file, matrix_array,count_matrices);
+    WriteMatricesBinaryFile(way, &file, matrix_array, count_matrices);
     SwapMatricesColsAndRowsFile(way, &file, count_matrices);
     OutputMatricesInFile(way, &file, count_matrices);
 }
@@ -111,7 +111,7 @@ void task1() {
 
 void GenerateRandomFloatNumbers(FILE *file, int count) {
     for (int i = 0; i < count; i++) {
-        double number = ((double)rand() / RAND_MAX) * 1000.0;
+        double number = ((double) rand() / RAND_MAX) * 1000.0;
         fprintf(file, "%lf\n", number);
     }
 }
@@ -164,8 +164,8 @@ void WriteGenerateExpression(FILE *file) {
     int num2 = (int) rand() % 9 + 1;
     int num3 = (int) rand() % 9 + 1;
 
-    int operator1  = generateRandomOperator();
-    int operator2  = generateRandomOperator();
+    int operator1 = generateRandomOperator();
+    int operator2 = generateRandomOperator();
 
     if ((int) rand() % 2)
         fprintf(file, "%d %c %d %c %d", num1, operator1, num2, operator2, num3);
@@ -193,13 +193,13 @@ int CalculateExpressionFromFile(FILE *file) {
 
     fscanf(file, "%d %c %d %c %d", &num1, &operator1, &num2, &operator2, &num3);
 
-    if (num3 == 0) 
+    if (num3 == 0)
         res = applyOperator(operator1, num1, num2);
     else {
         if (operator1 == '/' || operator1 == '*')
             res = applyOperator(operator2, applyOperator(operator1, \
             num1, num2), num3);
-        else 
+        else
             res = applyOperator(operator1, num1, \
             applyOperator(operator2, num2, num3));
     }
@@ -217,18 +217,18 @@ void task3() {
     fclose(file);
 
     fopen(way_input, "r");
-    int res =  CalculateExpressionFromFile(file);
+    int res = CalculateExpressionFromFile(file);
     fclose(file);
 
     fopen(way_input, "a");
-    fprintf(file," = %d", res);
+    fprintf(file, " = %d", res);
     fclose(file);
 
 }
 
-void generateRandomWords(const char* filename) {
-    char* way = getWayByTasks(filename);
-    FILE* file = fopen(way, "w");
+void generateRandomWords(const char *filename) {
+    char *way = getWayByTasks(filename);
+    FILE *file = fopen(way, "w");
 
     char alphabet[] = "abcdefghijklmnopqrstuvwxyz";
     int alphabet_length = strlen(alphabet);
@@ -249,13 +249,13 @@ void generateRandomWords(const char* filename) {
     fclose(file);
 }
 
-void printCorrectWords(char* inputFilename, char* outputFilename, char* sequence) {
-    char* way_input = getWayByTasks(inputFilename);
-    FILE* file_input = fopen(way_input, "r");
+void printCorrectWords(char *inputFilename, char *outputFilename, char *sequence) {
+    char *way_input = getWayByTasks(inputFilename);
+    FILE *file_input = fopen(way_input, "r");
     check_Correct_Open_File(file_input);
 
-    char* way_output = getWayByTasks(outputFilename);
-    FILE* file_output = fopen(way_output, "w");
+    char *way_output = getWayByTasks(outputFilename);
+    FILE *file_output = fopen(way_output, "w");
     check_Correct_Open_File(file_output);
 
     char word[MAX_N_WORDS_IN_STRING];
@@ -274,9 +274,9 @@ void task4() {
     printCorrectWords("task4input.txt", "task4output.txt", "a");
 }
 
-void generateRandomStrings(char* filename) {
-    char* way = getWayByTasks(filename);
-    FILE* file = fopen(way, "w");
+void generateRandomStrings(char *filename) {
+    char *way = getWayByTasks(filename);
+    FILE *file = fopen(way, "w");
     check_Correct_Open_File(file);
 
     char alphabet[] = " abcdefg hijklm nopqrst uvwxyz ";
@@ -299,13 +299,13 @@ void generateRandomStrings(char* filename) {
     fclose(file);
 }
 
-void printMaxLenWordsInString(char* inputFilename, char* outputFilename) {
-    char* way_input = getWayByTasks(inputFilename);
-    FILE* file_input = fopen(way_input, "r");
+void printMaxLenWordsInString(char *inputFilename, char *outputFilename) {
+    char *way_input = getWayByTasks(inputFilename);
+    FILE *file_input = fopen(way_input, "r");
     check_Correct_Open_File(file_input);
 
-    char* way_output = getWayByTasks(outputFilename);
-    FILE* file_output = fopen(way_output, "w");
+    char *way_output = getWayByTasks(outputFilename);
+    FILE *file_output = fopen(way_output, "w");
     check_Correct_Open_File(file_output);
 
     char s[50];
@@ -384,7 +384,6 @@ void generatePolinomialArray(char *filename, int nPalinomial, int nMember) {
 }
 
 
-
 void printCorrectPalinomial(char *filename, int x, int nPalinomial, int nMember) {
     char *c;
     int counter;
@@ -443,7 +442,7 @@ void printPalinomialWithFile(char *filename, int nPalinomial, int nMember) {
     for (int i = 0; i < nPalinomial; ++i) {
         int res = 0;
         for (int j = 0; j < nMember; ++j) {
-            printf("(%dx^%d)",array[i][j].k, array[i][j].pow);
+            printf("(%dx^%d)", array[i][j].k, array[i][j].pow);
             if (j != nMember - 1) {
                 printf(" + ");
             }
@@ -464,10 +463,10 @@ void task6() {
 
 }
 
-void generateArray(int* a, int size) {
+void generateArray(int *a, int size) {
     srand(time(NULL));
 
-    int half = size/2;
+    int half = size / 2;
     int counter_positive = 0, counter_negative = 0, index = 0;
 
     while (counter_negative < half && counter_positive < half) {
@@ -494,9 +493,9 @@ void generateArray(int* a, int size) {
     }
 }
 
-void generateArrayBinaryFile(char *filename,int *a, int size) {
+void generateArrayBinaryFile(char *filename, int *a, int size) {
     char *way = getWayByTasks(filename);
-    FILE* file = fopen(way, "wb");
+    FILE *file = fopen(way, "wb");
     char *c = (char *) a;
     for (int i = 0; i < sizeof(int) * size; i++) {
         putc(*c++, file);
@@ -575,7 +574,7 @@ void transpocseMatrixIfNotSymetricFile(char *file_name, FILE *file, int count_ma
     }
 
     for (int j = 0; j < count_matrices; ++j)
-        if(isSymmetricMatrix(&ptr[j]))
+        if (isSymmetricMatrix(&ptr[j]))
             transposeMatrix(&ptr[j]);
 
     c = (char *) ptr;
@@ -601,11 +600,11 @@ void task8() {
 
                     8, 9, 0,
                     8, 9, 0,
-                    8, 9, 0 };
+                    8, 9, 0};
 
     matrix *matrix_array = createArrayOfMatrixFromArray(values, 3, 3, 3);
 
-    WriteMatricesBinaryFile(way, &file, matrix_array,count_matrices);
+    WriteMatricesBinaryFile(way, &file, matrix_array, count_matrices);
     transpocseMatrixIfNotSymetricFile(way, &file, count_matrices);
     OutputMatricesInFile(way, &file, count_matrices);
 }
@@ -621,23 +620,23 @@ Sportsman *getMemForSportsmensArray(int nSportsmens) {
     return array_sportsmens;
 }
 
-void genereteSportsmens (Sportsman * array_sportsmens, int count_sportsmens) {
+void genereteSportsmens(Sportsman *array_sportsmens, int count_sportsmens) {
     srand(time(NULL));
-    char *names[10] = { "Biba", "Boba", "Linus", "Ryan", "Ryzen", "Bubuntu", \
+    char *names[10] = {"Biba", "Boba", "Linus", "Ryan", "Ryzen", "Bubuntu", \
     "Andrusha", "Women", "Gojo", "Roronoa"};
-    char *surnames[10] = { "Otcovich", "Kachkovich", "Kalich", "Torvalds", "ByeByevich", \
+    char *surnames[10] = {"Otcovich", "Kachkovich", "Kalich", "Torvalds", "ByeByevich", \
     "Archich", "Applich", "Ymich", "Potnich", "Bigsmokevich"};
 
     for (int i = 0; i < count_sportsmens; ++i) {
-        array_sportsmens[i].res = rand()%100 + 1;
-        array_sportsmens[i].name = names[rand()%10];
-        array_sportsmens[i].surname = surnames[rand()%10];
+        array_sportsmens[i].res = rand() % 100 + 1;
+        array_sportsmens[i].name = names[rand() % 10];
+        array_sportsmens[i].surname = surnames[rand() % 10];
     }
 }
 
-void writeSportsmensInFile(FILE *filename, Sportsman * array_sportsmens, int count_sportsmens) {
+void writeSportsmensInFile(FILE *filename, Sportsman *array_sportsmens, int count_sportsmens) {
     char *way = getWayByTasks(filename);
-    FILE* file = fopen(way, "wb");
+    FILE *file = fopen(way, "wb");
 
     char *c = (char *) array_sportsmens;
 
@@ -693,7 +692,7 @@ void getBestTeam(FILE *filename, int size_team, int count_sportsmens) {
         team[i] = array_sportsmens[i];
     }
 
-    writeSportsmensInFile(filename,team, size_team);
+    writeSportsmensInFile(filename, team, size_team);
     outputSportsmensFromFile(filename, size_team);
 }
 
@@ -705,19 +704,24 @@ void task9() {
     writeSportsmensInFile("task9.txt", array, count_sportsmens);
     outputSportsmensFromFile("task9.txt", count_sportsmens);
     printf("\n");
-    getBestTeam("task9.txt",size_team,count_sportsmens);
+    getBestTeam("task9.txt", size_team, count_sportsmens);
+
+}
+
+void task10() {
 
 }
 
 int main() {
-   task1();
-   task2();
-   task3();
-   task4();
-   task5();
-   task6();
-   task7();
-   task8();
+    task1();
+    task2();
+    task3();
+    task4();
+    task5();
+    task6();
+    task7();
+    task8();
     task9();
+    task10();
 }
 
