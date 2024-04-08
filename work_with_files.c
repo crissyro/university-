@@ -708,20 +708,110 @@ void task9() {
 
 }
 
-void task10() {
 
+typedef struct Product {
+    char *name;
+    int price;
+    int count;
+    int full_price;
+} Product;
+
+Product *getMemForProductArray(int nProduct) {
+    Product *array_product = (Product *) calloc(nProduct, sizeof(Product));
+    return array_product;
 }
 
+void generateProductArray(Product *array_product) {
+    srand(time(NULL));
+    char *names[] = {"Banans", "Apples", "Lays", "Muka", "Water", "Ryzen5500", "RTX4090"};
+    int count_unique_product = 0;
+    for (int i = 0; i < 7; ++i) {
+        array_product[i].name = names[i];
+        array_product[i].count = rand() % 20;
+        array_product[i].price = rand() %300 + 1;
+        array_product[i].full_price = array_product[i].price * array_product[i].count;
+    }
+}
+
+void generateConsignment(Product *array_product) {
+    char *names[] = {"Banans", "Apples", "Lays", "Muka", "Water", "Ryzen5500", "RTX4090"};
+    int count_unique_product = 0;
+    for (int i = 0; i < 7; ++i) {
+        array_product[i].name = names[i];
+        array_product[i].count = rand() % 20;
+        array_product[i].price = 0;
+        array_product[i].full_price = array_product[i].price * array_product[i].count;
+    }
+}
+
+void outputProducts(Product *array, int count_product) {
+    for (int i = 0; i < count_product; ++i) {
+        printf("%s\n Price: %d Count: %d\n",array[i].name, array[i].price, array[i].count);
+    }
+}
+
+void updateBaseProduct(Product *array_product, Product *array_consignment, int count_product) {
+    for (int i = 0; i < count_product; ++i) {
+        for (int j = 0; j < count_product; ++j) {
+            if (!(strcmp(array_consignment[i].name, array_product[j].name))) {
+                array_product[j].count = array_product[j].count > array_consignment[i].count ? array_product[j].count - array_consignment[i].count : 0;
+                array_product[j].full_price = array_product[j].count * array_product[j].price;
+            }
+        }
+    }
+}
+
+void writeProductsInFile(FILE *filename,Product *array_product, int count_product) {
+    char *way = getWayByTasks(filename);
+    FILE* file = fopen(way, "wb");
+
+    char *c = (char *) array_product;
+
+    for (int i = 0; i < sizeof(Product) * count_product; i++) {
+        putc(*c++, file);
+    }
+    fclose(file);
+}
+
+void readProductsInFile(FILE *filename, int count_product) {
+    int counter;
+    Sportsman *array = getMemForProductArray(count_product);;
+    char *c = (char *) array;
+
+    char *way = getWayByTasks(filename);
+    FILE *file = fopen(way, "rb");
+
+    while ((counter = getc(file)) != EOF) {
+        *c = counter;
+        c++;
+    }
+    fclose(file);
+}
+
+void task10() {
+    Product *array = getMemForProductArray(7);
+    generateProductArray(array);
+    outputProducts(array, 7);
+    printf("\n");
+
+    Product *arrayC = getMemForProductArray(7);
+    generateConsignment(arrayC);
+    outputProducts(arrayC,7);
+
+    printf("\n");
+    updateBaseProduct(array, arrayC, 7);
+    outputProducts(array, 7);
+}
 int main() {
-    task1();
-    task2();
-    task3();
-    task4();
-    task5();
-    task6();
-    task7();
-    task8();
-    task9();
+//    task1();
+//    task2();
+//    task3();
+//    task4();
+//    task5();
+//    task6();
+//    task7();
+//    task8();
+//    task9();
     task10();
 }
 
