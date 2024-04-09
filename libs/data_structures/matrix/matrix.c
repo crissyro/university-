@@ -58,11 +58,11 @@ void inputMatrices(matrix *ms, int nMatrices) {
 //вывод матрицы m
 void outputMatrix(matrix m) {
     for (size_t i = 0; i < m.nRows; i++) {
-        printf("/n");
+        printf("\n");
         for (size_t j = 0; j < m.nCols; j++)
-            printf("%d", m.values[i][j]);
+            printf("%d\t", m.values[i][j]);
     }
-    printf("/n");
+    printf("\n");
 }
 
 
