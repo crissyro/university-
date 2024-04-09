@@ -11,6 +11,15 @@ void task1() {
     outputMatrix(main_matrix);
 }
 
+void task2() {
+    matrix m = getMemMatrix(4, 3);
+    inputMatrix(&m);
+    outputMatrix(m);
+    lifeGameStep(m);
+    outputMatrix(m);
+}
+
 int main() {
-    task1();
+    //task1();
+    task2();
 }

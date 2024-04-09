@@ -22,3 +22,49 @@ void updateMatrixSubMatrices(matrix main_matrix, matrix sub_matrix_array) {
         }
     }
 }
+
+int getCountNeighbour(matrix m, int i, int j) {
+    int i_plus = i + 1, i_minus = i - 1, j_plus = j + 1, j_minus = j - 1, sum = 0;
+
+    i_minus = i_minus < 0 ? m.nRows - 1 : i_minus;
+    j_minus = j_minus < 0 ? m.nCols - 1 : j_minus;
+    i_plus = i_plus < m.nRows ? i_plus : 0;
+    j_plus = j_plus < m.nRows ? j_plus : 0;
+
+    sum += m.values[i_minus][j];
+    sum += m.values[i_plus][j];
+    sum += m.values[i_minus][j_minus];
+    sum += m.values[i_plus][j_minus];
+    sum += m.values[i_minus][j_plus];
+    sum += m.values[i_plus][j_plus];
+    sum += m.values[i][j_minus];
+    sum += m.values[i][j_plus];
+
+
+    return sum;
+}
+
+void lifeGameStep(matrix m) {
+    matrix buf = getMemMatrix(m.nRows, m.nCols);
+
+    for (int i = 0; i < m.nRows; ++i) {
+        for (int j = 0; j < m.nCols; ++j) {
+            buf.values[i][j] = getCountNeighbour(m, i, j);
+        }
+    }
+
+    outputMatrix(buf);
+
+    for (int i = 0; i < m.nRows; ++i) {
+        for (int j = 0; j < m.nCols; ++j) {
+            if (buf.values[i][j] < 2) {
+                m.values[i][j] = 0;
+            } else if (buf.values[i][j] == 3 && m.values[i][j] == 0) {
+                m.values[i][j] = 1;
+            } else if  (buf.values[i][j] > 3 && m.values[i][j] == 1)  {
+                m.values[i][j] = 0;
+            }
+        }
+    }
+    freeMemMatrix(&buf);
+}
