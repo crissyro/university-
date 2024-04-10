@@ -19,7 +19,16 @@ void task2() {
     outputMatrix(m);
 }
 
+void task3() {
+    matrix m = getMemMatrix(3, 3);
+    inputMatrix(&m);
+    outputMatrix(m);
+    medianFilter3(m);
+    outputMatrix(m);
+}
+
 int main() {
     //task1();
-    task2();
+    //task2();
+    task3();
 }

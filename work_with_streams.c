@@ -1,5 +1,7 @@
 #include "libs/data_structures/matrix/matrix.c"
 #include <time.h>
+#include "libs/algorithms/array/array.c"
+
 
 void generateSubMatrixArray(int size_main_matrix, matrix sub_matrix_array) {
     srand(time(NULL));
@@ -67,4 +69,26 @@ void lifeGameStep(matrix m) {
         }
     }
     freeMemMatrix(&buf);
+}
+
+
+int compare(const void *a, const void *b) {
+    return (*(int*)a - *(int*)b);
+}
+
+
+void medianFilter3(matrix m) {
+    int size = 0;
+    int a[9];
+
+    for (int i = 0; i < 3; ++i) {
+        for (int j = 0; j < 3; ++j) {
+            if (i != 1 | j != 1) {
+                a[size++] = m.values[i][j];
+            }
+        }
+    }
+    qsort(a, size, sizeof(int), compare);
+    outputArray_(a, 8);
+    m.values[1][1] = a[size/2];
 }
