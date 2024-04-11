@@ -179,12 +179,12 @@ int main() {
   //  task1_test();
   //  task2_test();
   //  task3_test();
-  // task4_test();
-  // task5_test();
-  // task6_test();
+  //  task4_test();
+  //  task5_test();
+  //  task6_test();
   //  task7_test();
   //  task8_test();
   //  task9_test();
-  //  task10_test();
+   task10_test();
 }
 
