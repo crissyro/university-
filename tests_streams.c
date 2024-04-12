@@ -44,7 +44,7 @@ void task8() {
     int indices[] = {0, 3, 2, 1};
     int indicesSize = 4;
 
-    char* resString = restoreString(s, indices, indicesSize);
+    char* resString = makeStringFromIndeces(s, indices, indicesSize);
 
     printf("%s\n", resString);
 

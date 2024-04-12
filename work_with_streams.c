@@ -52,8 +52,10 @@ void generateSubMatrixArray(int size_main_matrix, matrix sub_matrix_array) {
         sub_matrix_array.values[i][0] = rand() % size_main_matrix;
         sub_matrix_array.values[i][1] = rand() % size_main_matrix;
 
-        sub_matrix_array.values[i][2] = sub_matrix_array.values[i][0] + rand() % (size_main_matrix - sub_matrix_array.values[i][0]);
-        sub_matrix_array.values[i][3] = sub_matrix_array.values[i][1] + rand() % (size_main_matrix - sub_matrix_array.values[i][1]);
+        sub_matrix_array.values[i][2] =
+                sub_matrix_array.values[i][0] + rand() % (size_main_matrix - sub_matrix_array.values[i][0]);
+        sub_matrix_array.values[i][3] =
+                sub_matrix_array.values[i][1] + rand() % (size_main_matrix - sub_matrix_array.values[i][1]);
     }
 }
 
@@ -105,7 +107,7 @@ void lifeGameStep(matrix m) {
                 m.values[i][j] = 0;
             } else if (buf.values[i][j] == 3 && m.values[i][j] == 0) {
                 m.values[i][j] = 1;
-            } else if  (buf.values[i][j] > 3 && m.values[i][j] == 1)  {
+            } else if (buf.values[i][j] > 3 && m.values[i][j] == 1) {
                 m.values[i][j] = 0;
             }
         }
@@ -115,7 +117,7 @@ void lifeGameStep(matrix m) {
 
 
 int compare(const void *a, const void *b) {
-    return (*(int*)a - *(int*)b);
+    return (*(int *) a - *(int *) b);
 }
 
 
@@ -132,11 +134,8 @@ void medianFilter3(matrix m) {
     }
     qsort(a, size, sizeof(int), compare);
     outputArray_(a, 8);
-    m.values[1][1] = a[size/2];
+    m.values[1][1] = a[size / 2];
 }
-
-
-
 
 
 int findMax(int *a, int size) {
@@ -169,21 +168,21 @@ void deleteLeftPart(int *a, int size, int max_index) {
     }
 }
 
-    typedef struct binaryTree_s {
-        int data;
-        struct binaryTree_s *left;
-        struct binaryTree_s *right;
-    } binaryTree;
+typedef struct binaryTree_s {
+    int data;
+    struct binaryTree_s *left;
+    struct binaryTree_s *right;
+} binaryTree;
 
 
-    binaryTree *createNode(int data) {
-        binaryTree *newNode = (binaryTree *)malloc(sizeof(binaryTree));
-        if (newNode == NULL) {
-            printf("Malloc returned NULL\n");
-            exit(1);
-        }
-        newNode->data  = data;
-        newNode->left  = NULL;
+binaryTree *createNode(int data) {
+    binaryTree *newNode = (binaryTree *) malloc(sizeof(binaryTree));
+    if (newNode == NULL) {
+        printf("Malloc returned NULL\n");
+        exit(1);
+    }
+    newNode->data = data;
+    newNode->left = NULL;
     newNode->right = NULL;
     return newNode;
 }
@@ -194,20 +193,16 @@ void push(binaryTree **tree, int data) {
     binaryTree *tmp = *tree;
     if (tmp == NULL) {
         *tree = newNode;
-    }
-    else if (data < tmp->data) {
+    } else if (data < tmp->data) {
         if (tmp->left == NULL) {
             tmp->left = createNode(data);
-        }
-        else {
+        } else {
             push(&(tmp->left), data);
         }
-    }
-    else if (data > tmp->data) {
+    } else if (data > tmp->data) {
         if (tmp->right == NULL) {
             tmp->right = createNode(data);
-        }
-        else {
+        } else {
             push(&(tmp->right), data);
         }
     }
@@ -217,8 +212,7 @@ void push(binaryTree **tree, int data) {
 void printInDepthRecursively(binaryTree *tree) {
     if (tree == NULL) {
         return;
-    }
-    else {
+    } else {
         printf("%d ", tree->data);
         if (tree->left != NULL) {
             printInDepthRecursively(tree->left);
@@ -230,14 +224,14 @@ void printInDepthRecursively(binaryTree *tree) {
 }
 
 void printBinTree(binaryTree *tree) {
-    if (tree!=NULL) { //Пока не встретится пустой узел
+    if (tree != NULL) { //Пока не встретится пустой узел
         printf("%d ", tree->data); //Отображаем корень дерева
         printBinTree(tree->left); //Рекурсивная функция для левого поддерева
         printBinTree(tree->right); //Рекурсивная функция для правого поддерева
     }
 }
 
-binaryTree *createTask7BinTree(int *a, int size)  {
+binaryTree *createTask7BinTree(int *a, int size) {
     int maxParent = findMax(a, size);
     binaryTree *newTree = createNode(maxParent);
 
@@ -269,8 +263,8 @@ binaryTree *createTask7BinTree(int *a, int size)  {
 }
 
 
-char* restoreString(char* s, int* indices, int indicesSize) {
-    char* result = (char*)malloc((indicesSize + 1) * sizeof(char));
+char *makeStringFromIndeces(char *s, int *indices, int indicesSize) {
+    char *result = (char*)malloc((indicesSize + 1) * sizeof(char));
 
     for (int i = 0; i < indicesSize; i++)
         result[indices[i]] = s[i];
