@@ -39,11 +39,59 @@ void task7() {
     printInDepthRecursively(tree);
 }
 
+void task8() {
+    char s[] = "abap";
+    int indices[] = {0, 3, 2, 1};
+    int indicesSize = 4;
+
+    char* resString = restoreString(s, indices, indicesSize);
+
+    printf("%s\n", resString);
+
+    free(resString);
+}
+
+void task9() {
+    srand(time(NULL));
+
+    int N;
+
+    scanf("Input N: %d ", &N);
+
+    int count_num = 10;
+    char *way_input = getWayByTasks("task9input.txt");
+    FILE *file_input = fopen(way_input, "w");
+    check_Correct_Open_File(file_input);
+    GenerateRandomIntNumbers(file_input, count_num);
+    fclose(file_input);
+
+    int numbers[count_num];
+    fopen(way_input, "r");
+    check_Correct_Open_File(way_input);
+    ReadIntNumbers(file_input, numbers, &count_num);
+    fclose(file_input);
+
+    for (int i = 0; i < count_num; i++) {
+        if (numbers[i] >= N)
+            deleteByPosSaveOrder_(numbers, &count_num, i);
+    }
+
+    char *way_output = getWayByTasks("task9output.txt");
+    FILE *file_output = fopen(way_output, "w");
+    check_Correct_Open_File(file_output);
+    WriteIntNumbers(file_output, numbers, count_num);
+    fclose(file_output);
+}
+
 int main() {
     //task1();
     //task2();
     //task3();
 
 
-    task7();
+    //task7();
+    //task8();
+    
+
+    return 0;
 }

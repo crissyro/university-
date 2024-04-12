@@ -1,7 +1,49 @@
 #include "libs/data_structures/matrix/matrix.c"
 #include <time.h>
 #include "libs/algorithms/array/array.c"
+#include <string.h>
 
+
+char *str_replace(char *orig, char *rep, char *with) {
+    char *result; // the return string
+    char *ins;    // the next insert point
+    char *tmp;    // varies
+    int len_rep;  // length of rep (the string to remove)
+    int len_with; // length of with (the string to replace rep with)
+    int len_front; // distance between rep and end of last rep
+    int count;    // number of replacements
+
+    // sanity checks and initialization
+    if (!orig || !rep)
+        return NULL;
+    len_rep = strlen(rep);
+    if (len_rep == 0)
+        return NULL; // empty rep causes infinite loop during count
+    if (!with)
+        with = "";
+    len_with = strlen(with);
+
+    // count the number of replacements needed
+    ins = orig;
+    for (count = 0; tmp = strstr(ins, rep); ++count) {
+        ins = tmp + len_rep;
+    }
+
+    tmp = result = malloc(strlen(orig) + (len_with - len_rep) * count + 1);
+
+    if (!result)
+        return NULL;
+
+    while (count--) {
+        ins = strstr(orig, rep);
+        len_front = ins - orig;
+        tmp = strncpy(tmp, orig, len_front) + len_front;
+        tmp = strcpy(tmp, with) + len_with;
+        orig += len_front + len_rep;
+    }
+    strcpy(tmp, orig);
+    return result;
+}
 
 void generateSubMatrixArray(int size_main_matrix, matrix sub_matrix_array) {
     srand(time(NULL));
@@ -225,3 +267,50 @@ binaryTree *createTask7BinTree(int *a, int size)  {
 
     return newTree;
 }
+
+
+char* restoreString(char* s, int* indices, int indicesSize) {
+    char* result = (char*)malloc((indicesSize + 1) * sizeof(char));
+
+    for (int i = 0; i < indicesSize; i++)
+        result[indices[i]] = s[i];
+
+    result[indicesSize] = '\0';
+
+    return result;
+}
+
+
+void check_Correct_Open_File(FILE *f) {
+    if (f == NULL) {
+        perror("f");
+        exit(1);
+    }
+}
+
+char *getWayByTasks(char *filename) {
+    char *way = __FILE__;
+    char *sub_way = str_replace("tasks/F", "F", filename);
+    return str_replace(way, __FILE_NAME__, sub_way);
+}
+
+
+void GenerateRandomIntNumbers(FILE *file, int count) {
+    srand(time(NULL));
+    for (int i = 0; i < count; i++) {
+        int number = ((int) rand() / RAND_MAX) * 1000;
+        fprintf(file, "d\n", number);
+    }
+}
+
+void ReadIntNumbers(FILE *file, int numbers[], int *count) {
+    *count = 0;
+    while (fscanf(file, "%d", &numbers[*count]) == 1)
+        (*count)++;
+}
+
+void WriteIntNumbers(FILE *file, int numbers[], int count) {
+    for (int i = 0; i < count; i++)
+        fprintf(file, "%d\n", numbers[i]);
+}
+
