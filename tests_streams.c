@@ -27,8 +27,23 @@ void task3() {
     outputMatrix(m);
 }
 
+
+
+void task7() {
+    binaryTree *tree = NULL;
+    push(tree, 6);
+    push(tree, 2);
+    push(tree, 1);
+    push(tree, 0);
+    push(tree, 3);
+    printInDepthRecursively(tree);
+}
+
 int main() {
     //task1();
     //task2();
-    task3();
+    //task3();
+
+
+    task7();
 }

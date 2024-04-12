@@ -114,60 +114,80 @@ int findIndexMax(int *a, int size) {
     }
 }
 
-
-typedef struct binary_tree {
-    int data;
-    struct binary_tree *left;
-    struct binary_tree *right;
-}binary_tree;
-
-binary_tree * createNode(int data) {
-    binary_tree *newNode = (binary_tree*)malloc(sizeof(binary_tree));
-    if (newNode == NULL) {
-        fprintf(stderr, "bad alloc");
-        exit(1);
+void deleteRightPart(int *a, int size, int max_index) {
+    while (max_index <= size) {
+        deleteByPosSaveOrder_(a, &size, max_index++);
     }
-    newNode->data = data;
-    newNode->left = NULL;
-    newNode->right = NULL;
 }
 
-void push_BinTree(binary_tree **tree, int data) {
-    binary_tree *newNode = createNode(data);
+void deleteLeftPart(int *a, int size, int max_index) {
+    int i = 0;
+    while (i <= max_index) {
+        deleteByPosSaveOrder_(a, &size, i++);
+    }
+}
 
-    binary_tree *tmp = *tree;
+    typedef struct binaryTree_s {
+        int data;
+        struct binaryTree_s *left;
+        struct binaryTree_s *right;
+    } binaryTree;
+
+
+    binaryTree *createNode(int data) {
+        binaryTree *newNode = (binaryTree *)malloc(sizeof(binaryTree));
+        if (newNode == NULL) {
+            printf("Malloc returned NULL\n");
+            exit(1);
+        }
+        newNode->data  = data;
+        newNode->left  = NULL;
+    newNode->right = NULL;
+    return newNode;
+}
+
+void push(binaryTree **tree, int data) {
+    binaryTree *newNode = createNode(data);
+
+    binaryTree *tmp = *tree;
     if (tmp == NULL) {
         *tree = newNode;
-    } else if (data < tmp->data) {
-        if (tmp->left == NULL)
-            tmp->left = newNode;
-        else
-            push_BinTree(&(tmp->left), data);
-    } else if (data > tmp->data)
-        if (tmp->right == NULL)
-            tmp->right = newNode;
-        else
-            push_BinTree(&(tmp->right), data);
+    }
+    else if (data < tmp->data) {
+        if (tmp->left == NULL) {
+            tmp->left = createNode(data);
+        }
+        else {
+            push(&(tmp->left), data);
+        }
+    }
+    else if (data > tmp->data) {
+        if (tmp->right == NULL) {
+            tmp->right = createNode(data);
+        }
+        else {
+            push(&(tmp->right), data);
+        }
+    }
 }
 
 // рекурсивный обход в глубину
-
-void printInDepthRecursively(binary_tree *tree) {
+void printInDepthRecursively(binaryTree *tree) {
     if (tree == NULL) {
         return;
-    } else {
-
+    }
+    else {
         printf("%d ", tree->data);
-
-        if (tree->left != NULL)
+        if (tree->left != NULL) {
             printInDepthRecursively(tree->left);
-
-        if (tree->right != NULL)
+        }
+        if (tree->right != NULL) {
             printInDepthRecursively(tree->right);
+        }
     }
 }
 
-void printBinTree(binary_tree *tree) {
+void printBinTree(binaryTree *tree) {
     if (tree!=NULL) { //Пока не встретится пустой узел
         printf("%d ", tree->data); //Отображаем корень дерева
         printBinTree(tree->left); //Рекурсивная функция для левого поддерева
@@ -175,17 +195,33 @@ void printBinTree(binary_tree *tree) {
     }
 }
 
-void createTask7BinTree(int *a, int size)  {
+binaryTree *createTask7BinTree(int *a, int size)  {
     int maxParent = findMax(a, size);
-    binary_tree *newTree = createNode(maxParent);
+    binaryTree *newTree = createNode(maxParent);
 
     int *bufLeft = a;
+    int sizeBufL = size;
+
     int *bufRight = a;
+    int sizeBufR = size;
+
     int index_max = findIndexMax(a, size);
 
+    deleteRightPart(bufLeft, sizeBufL, index_max);
 
-    deleteByPosSaveOrder_(bufLeft, &size, index_max);
+    while (sizeBufL != 0) {
+        int currentMaxIndex = findIndexMax(bufLeft, sizeBufL);
+        push(newTree, bufLeft[currentMaxIndex]);
+        deleteByPosSaveOrder_(bufLeft, &sizeBufL, currentMaxIndex);
+    }
 
+    deleteLeftPart(bufRight, sizeBufR, index_max);
 
+    while (sizeBufR != 0) {
+        int currentMaxIndex = findIndexMax(bufRight, sizeBufR);
+        push(newTree, bufRight[currentMaxIndex]);
+        deleteByPosSaveOrder_(bufRight, &sizeBufR, currentMaxIndex);
+    }
 
+    return newTree;
 }
