@@ -92,3 +92,100 @@ void medianFilter3(matrix m) {
     outputArray_(a, 8);
     m.values[1][1] = a[size/2];
 }
+
+
+
+
+
+int findMax(int *a, int size) {
+    int max = INT64_MIN;
+    for (int i = 0; i < size; i++) {
+        if (a[i] > max)
+            max = a[i];
+    }
+    return max;
+}
+
+int findIndexMax(int *a, int size) {
+    int index_max = 0;
+    for (int i = 0; i < size; ++i) {
+        if (a[i] == findMax(a, size))
+            index_max = i;
+    }
+}
+
+
+typedef struct binary_tree {
+    int data;
+    struct binary_tree *left;
+    struct binary_tree *right;
+}binary_tree;
+
+binary_tree * createNode(int data) {
+    binary_tree *newNode = (binary_tree*)malloc(sizeof(binary_tree));
+    if (newNode == NULL) {
+        fprintf(stderr, "bad alloc");
+        exit(1);
+    }
+    newNode->data = data;
+    newNode->left = NULL;
+    newNode->right = NULL;
+}
+
+void push_BinTree(binary_tree **tree, int data) {
+    binary_tree *newNode = createNode(data);
+
+    binary_tree *tmp = *tree;
+    if (tmp == NULL) {
+        *tree = newNode;
+    } else if (data < tmp->data) {
+        if (tmp->left == NULL)
+            tmp->left = newNode;
+        else
+            push_BinTree(&(tmp->left), data);
+    } else if (data > tmp->data)
+        if (tmp->right == NULL)
+            tmp->right = newNode;
+        else
+            push_BinTree(&(tmp->right), data);
+}
+
+// рекурсивный обход в глубину
+
+void printInDepthRecursively(binary_tree *tree) {
+    if (tree == NULL) {
+        return;
+    } else {
+
+        printf("%d ", tree->data);
+
+        if (tree->left != NULL)
+            printInDepthRecursively(tree->left);
+
+        if (tree->right != NULL)
+            printInDepthRecursively(tree->right);
+    }
+}
+
+void printBinTree(binary_tree *tree) {
+    if (tree!=NULL) { //Пока не встретится пустой узел
+        printf("%d ", tree->data); //Отображаем корень дерева
+        printBinTree(tree->left); //Рекурсивная функция для левого поддерева
+        printBinTree(tree->right); //Рекурсивная функция для правого поддерева
+    }
+}
+
+void createTask7BinTree(int *a, int size)  {
+    int maxParent = findMax(a, size);
+    binary_tree *newTree = createNode(maxParent);
+
+    int *bufLeft = a;
+    int *bufRight = a;
+    int index_max = findIndexMax(a, size);
+
+
+    deleteByPosSaveOrder_(bufLeft, &size, index_max);
+
+
+
+}
