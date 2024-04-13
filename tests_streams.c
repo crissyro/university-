@@ -27,6 +27,30 @@ void task3() {
     outputMatrix(m);
 }
 
+void task4() {
+    Domain domain;
+    char *s[] = { "900 google.mail.com", "50yahoo.com", "1 intel.mail.com", "5 wiki.org"};
+    Domain *res = getMemDomainArray(10);
+    int size = 0;
+    domain = getDomain(s[0]);
+    addAllDomain(res, &size, domain);
+    domain = getDomain(s[1]);
+    addAllDomain(res, &size, domain);
+    domain = getDomain(s[2]);
+    addAllDomain(res, &size, domain);
+    domain = getDomain(s[3]);
+    addAllDomain(res, &size, domain);
+
+    for (int i = 1; i <= size; ++i) {
+        printf("%d %s\n", res[i].count_used, res[i].way);
+    }
+}
+
+void task5() {
+    matrix m = getMemMatrix(3, 3);
+    inputMatrix(&m);
+    printf("%d", GetCountUnitSubMatrices(m));
+}
 
 
 void task7() {
@@ -87,6 +111,8 @@ int main() {
     //task1();
     //task2();
     //task3();
+    //task4();
+    //task5();
 
 
     //task7();

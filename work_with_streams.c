@@ -2,48 +2,10 @@
 #include <time.h>
 #include "libs/algorithms/array/array.c"
 #include <string.h>
+#include "libs/tests/using_string_.c"
+#include <limits.h>
 
 
-char *str_replace(char *orig, char *rep, char *with) {
-    char *result; // the return string
-    char *ins;    // the next insert point
-    char *tmp;    // varies
-    int len_rep;  // length of rep (the string to remove)
-    int len_with; // length of with (the string to replace rep with)
-    int len_front; // distance between rep and end of last rep
-    int count;    // number of replacements
-
-    // sanity checks and initialization
-    if (!orig || !rep)
-        return NULL;
-    len_rep = strlen(rep);
-    if (len_rep == 0)
-        return NULL; // empty rep causes infinite loop during count
-    if (!with)
-        with = "";
-    len_with = strlen(with);
-
-    // count the number of replacements needed
-    ins = orig;
-    for (count = 0; tmp = strstr(ins, rep); ++count) {
-        ins = tmp + len_rep;
-    }
-
-    tmp = result = malloc(strlen(orig) + (len_with - len_rep) * count + 1);
-
-    if (!result)
-        return NULL;
-
-    while (count--) {
-        ins = strstr(orig, rep);
-        len_front = ins - orig;
-        tmp = strncpy(tmp, orig, len_front) + len_front;
-        tmp = strcpy(tmp, with) + len_with;
-        orig += len_front + len_rep;
-    }
-    strcpy(tmp, orig);
-    return result;
-}
 
 void generateSubMatrixArray(int size_main_matrix, matrix sub_matrix_array) {
     srand(time(NULL));
@@ -137,6 +99,82 @@ void medianFilter3(matrix m) {
     m.values[1][1] = a[size / 2];
 }
 
+
+typedef struct Domain {
+    char *way;
+    int count_used;
+} Domain;
+
+Domain *getMemDomainArray(int n) {
+    Domain *values = (Domain *) malloc(n * sizeof(Domain));
+    return values;
+}
+
+Domain getDomain(char *s) {
+    Domain domain;
+    WordDescriptor word;
+
+    getWordReverse(getEndOfString(s), s, &word);
+
+    domain.count_used = atoi(s);
+    domain.way = word.begin;
+
+    return domain;
+}
+
+void addSubDomainInArray(Domain *res, int *size_res, char *way, int count_used) {
+    Domain domain;
+    int is_new_domain = 1;
+
+    for (int i = 1; i <= *size_res; ++i) {
+        if (!strcmp(res[i].way, way)) {
+            res[i].count_used += count_used;
+            is_new_domain = 0;
+            break;
+        }
+    }
+    if (is_new_domain) {
+        (*size_res)++;
+        res[*size_res].count_used = count_used;
+        res[*size_res].way = way;
+    }
+}
+
+
+void addAllDomain(Domain *res, int *size_res, Domain domain) {
+    char *ptrRead = getEndOfString(domain.way);
+
+    while (ptrRead > domain.way) {
+        if (*ptrRead == '.') {
+            addSubDomainInArray(res, size_res, ptrRead, domain.count_used);
+        }
+        ptrRead--;
+    }
+    addSubDomainInArray(res, size_res, ptrRead, domain.count_used);
+}
+
+int GetCountUnitSubMatrices(matrix m) {
+    int sum = 0;
+    for (int i = 0; i < m.nRows; ++i) {
+        int *nums = (int *) malloc(m.nCols * sizeof(int));
+        for (int j = 0; j < m.nCols; ++j) {
+            if (m.values[i][j] == 0) {
+                nums[j] = 0;
+            } else if (j == 0) {
+                nums[j] = 1;
+            } else {
+                nums[j] = nums[j - 1] + 1;
+                sum += nums[j - 1] + 1;
+            }
+            int min = INT_MAX;
+            for (int k = j; k < m.nCols; ++k) {
+                min = nums[k] < min ? nums[k] : min;
+            }
+            sum += min;
+        }
+    }
+    return sum;
+}
 
 int findMax(int *a, int size) {
     int max = INT64_MIN;
@@ -264,7 +302,7 @@ binaryTree *createTask7BinTree(int *a, int size) {
 
 
 char *makeStringFromIndeces(char *s, int *indices, int indicesSize) {
-    char *result = (char*)malloc((indicesSize + 1) * sizeof(char));
+    char *result = (char *) malloc((indicesSize + 1) * sizeof(char));
 
     for (int i = 0; i < indicesSize; i++)
         result[indices[i]] = s[i];
@@ -287,7 +325,6 @@ char *getWayByTasks(char *filename) {
     char *sub_way = str_replace("tasks/F", "F", filename);
     return str_replace(way, __FILE_NAME__, sub_way);
 }
-
 
 void GenerateRandomIntNumbers(FILE *file, int count) {
     srand(time(NULL));
