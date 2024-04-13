@@ -46,6 +46,11 @@ void task4() {
     }
 }
 
+void task6() {
+    printf("%d",GetMinNumByPattern("DDD"));
+}
+
+
 void task5() {
     matrix m = getMemMatrix(3, 3);
     inputMatrix(&m);
@@ -113,12 +118,11 @@ int main() {
     //task3();
     //task4();
     //task5();
-
-
+    //task6();
     //task7();
     //task8();
     //task9();
-
+    //task10();
 
     return 0;
 }
