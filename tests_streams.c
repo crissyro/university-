@@ -57,15 +57,21 @@ void task5() {
     printf("%d", GetCountUnitSubMatrices(m));
 }
 
-
 void task7() {
-    binaryTree *tree = NULL;
-    push(tree, 6);
-    push(tree, 2);
-    push(tree, 1);
-    push(tree, 0);
-    push(tree, 3);
-    printInDepthRecursively(tree);
+    int size = 6;
+    int a[] = {3,2,1,6,0, 5};
+    int *res = (int *)calloc(size * 2, sizeof(int));
+    for (int i = 1; i < size * 2; ++i) {
+        res[i] = -1;
+    }
+
+    getBinTree(a, size, res, 1);
+
+    for (int i = 1; i < size * 2; ++i) {
+        printf("%d ", res[i]);
+    }
+
+    free(res);
 }
 
 void task8() {
