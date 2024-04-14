@@ -4,6 +4,7 @@
 #include "libs/tests/using_string_.c"
 #include <limits.h>
 #include <math.h>
+#include <stdlib.h>
 
 
 
@@ -228,6 +229,24 @@ int GetMinNumByPattern(char *pattern) {
     return -1;
 }
 
+int findMax(int *a, int size) {
+    int max = INT64_MIN;
+    for (int i = 0; i < size; i++) {
+        if (a[i] > max)
+            max = a[i];
+    }
+    return max;
+}
+
+int findIndexMax(int *a, int size) {
+    int index_max = 0;
+    for (int i = 0; i < size; ++i) {
+        if (a[i] == findMax(a, size))
+            index_max = i;
+    }
+    return index_max;
+}
+
 void getBinTree(int *a, int size, int *res, int posWrite) {
     int maxPos = findIndexMax(a, size);
     res[posWrite] = a[maxPos];
@@ -289,3 +308,39 @@ void WriteIntNumbers(FILE *file, int numbers[], int count) {
         fprintf(file, "%d\n", numbers[i]);
 }
 
+void outputPartsText(int size_part, FILE *file) {
+    for (int i = 0; i < size_part; ++i) {
+        char res[50];
+        fgets(res, 50, file);
+        if (feof(file) != 0) {
+            printf("End of file\n");
+            break;
+        }
+        printf("%s", res);
+    }
+}
+
+void generateRandomStrings(char *filename) {
+    char *way = getWayByTasks(filename);
+    FILE *file = fopen(way, "w");
+    check_Correct_Open_File(file);
+
+    char alphabet[] = " abcdefg hijklm nopqrst uvwxyz ";
+    int alphabet_length = strlen(alphabet);
+
+    srand(time(NULL));
+
+    for (int i = 0; i < MAX_N_WORDS_IN_STRING; i++) {
+        char word[50];
+        int word_length = rand() % (40) + 1;
+
+        for (int j = 0; j < word_length; j++) {
+            word[j] = alphabet[rand() % alphabet_length];
+        }
+
+        word[word_length] = '\0';
+        fprintf(file, "%s\n", word);
+    }
+
+    fclose(file);
+}

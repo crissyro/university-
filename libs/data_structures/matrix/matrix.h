@@ -2,9 +2,10 @@
 #define INC_MATRIX_H
 
 #include <stdio.h>
-#include <stdlib.h>
 #include <stdbool.h>
 #include <assert.h>
+#include <stdlib.h>
+
 
 typedef struct matrix {
     int **values; // элементы матрицы
