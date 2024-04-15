@@ -179,7 +179,7 @@ int GetCountUnitSubMatrices(matrix m) {
 
 int isPatternNum(int n, char *s) {
     char s_num[strlen_(s)];
-    itoa(n, s_num, 10);
+   // itoa(n, s_num, 10);
     for (int i = 1; i <= strlen_(s); ++i) {
         if (s[i] == 'I') {
             if (s_num[i - 1] >= s_num[i]) {
@@ -228,6 +228,7 @@ int GetMinNumByPattern(char *pattern) {
     }
     return -1;
 }
+
 
 int findMax(int *a, int size) {
     int max = INT64_MIN;
@@ -286,7 +287,7 @@ void check_Correct_Open_File(FILE *f) {
 char *getWayByTasks(char *filename) {
     char *way = __FILE__;
     char *sub_way = str_replace("tasks/F", "F", filename);
-    return str_replace(way, __FILE_NAME__, sub_way);
+    return str_replace(way, __FILE__, sub_way);
 }
 
 void GenerateRandomIntNumbers(FILE *file, int count) {
@@ -344,3 +345,4 @@ void generateRandomStrings(char *filename) {
 
     fclose(file);
 }
+

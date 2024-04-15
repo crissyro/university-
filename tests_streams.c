@@ -48,15 +48,14 @@ void task4() {
     }
 }
 
-void task6() {
-    printf("%d",GetMinNumByPattern("DDD"));
-}
-
-
 void task5() {
     matrix m = getMemMatrix(3, 3);
     inputMatrix(&m);
     printf("%d", GetCountUnitSubMatrices(m));
+}
+
+void task6() {
+    printf("%d",GetMinNumByPattern("DDD"));
 }
 
 void task7() {
