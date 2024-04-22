@@ -21,12 +21,31 @@ void task2() {
     outputMatrix(m);
 }
 
-void task3() {
-    matrix m = getMemMatrix(3, 3);
-    inputMatrix(&m);
-    outputMatrix(m);
-    medianFilter3(m);
-    outputMatrix(m);
+void test_task3() {
+    matrix image = createMatrixFromArray(
+            (int[]){
+                    10, 20, 30,
+                    25, 35, 45,
+                    15, 25, 35
+            },
+            3, 3
+    );
+
+    medianFilter(&image);
+
+    matrix expected_result = createMatrixFromArray(
+            (int[]) {
+                    10, 20, 30,
+                    25, 25, 45,
+                    15, 25, 35
+            },
+            3, 3
+    );
+
+    assert(areTwoMatricesEqual(&image, &expected_result) == true);
+
+    freeMemMatrix(&image);
+    freeMemMatrix(&expected_result);
 }
 
 void task4() {

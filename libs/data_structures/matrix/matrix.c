@@ -295,3 +295,19 @@ matrix *createArrayOfMatrixFromArray(const int *values, size_t nMatrices, size_t
 
     return ms;
 }
+
+matrix copyMatrix(matrix *original) {
+    matrix copy;
+    copy.nRows = original->nRows;
+    copy.nCols = original->nCols;
+
+    copy.values = (int **)malloc(copy.nRows * sizeof(int *));
+    for (int i = 0; i < copy.nRows; i++) {
+        copy.values[i] = (int *)malloc(copy.nCols * sizeof(int));
+        for (int j = 0; j < copy.nCols; j++) {
+            copy.values[i][j] = original->values[i][j];
+        }
+    }
+
+    return copy;
+}

@@ -6,6 +6,7 @@
 #include <math.h>
 #include <stdlib.h>
 
+#define WINDOW_SIZE 9
 
 
 void generateSubMatrixArray(int size_main_matrix, matrix sub_matrix_array) {
@@ -79,27 +80,35 @@ void lifeGameStep(matrix m) {
 }
 
 
-int compare(const void *a, const void *b) {
-    return (*(int *) a - *(int *) b);
-}
+void medianFilter(matrix *image) {
+    matrix filt_image = copyMatrix(image);
 
+    int window[WINDOW_SIZE];
 
-void medianFilter3(matrix m) {
-    int size = 0;
-    int a[9];
-
-    for (int i = 0; i < 3; ++i) {
-        for (int j = 0; j < 3; ++j) {
-            if (i != 1 | j != 1) {
-                a[size++] = m.values[i][j];
+    for (int i = 1; i < image->nRows - 1; i++) {
+        for (int j = 1; j < image->nCols - 1; j++) {
+            int index = 0;
+            for (int k = -1; k <= 1; k++) {
+                for (int l = -1; l <= 1; l++)
+                    window[index++] = image->values[i + k][j + l];
             }
+
+            for (int m = 0; m < WINDOW_SIZE; m++) {
+                for (int n = m + 1; n < WINDOW_SIZE; n++) {
+                    if (window[n] < window[m]) {
+                        int temp = window[m];
+                        window[m] = window[n];
+                        window[n] = temp;
+                    }
+                }
+            }
+            filt_image.values[i][j] = window[WINDOW_SIZE / 2];
         }
     }
-    qsort(a, size, sizeof(int), compare);
-    outputArray_(a, 8);
-    m.values[1][1] = a[size / 2];
-}
+    freeMemMatrix(image);
 
+    *image = filt_image;
+}
 
 typedef struct Domain {
     char *way;

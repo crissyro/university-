@@ -91,4 +91,6 @@ matrix createMatrixFromArray(const int *a, int nRows, int nCols) ;
 //размещенных в динамической памяти, построенных из элементов массива a
 matrix *createArrayOfMatrixFromArray(const int *values, size_t nMatrices, size_t nRows, size_t nCols) ;
 
+matrix copyMatrix(matrix *original);
+
 #endif
