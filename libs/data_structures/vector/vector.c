@@ -4,7 +4,7 @@
 //– Если ОС не смогла выделить необходимый фрагмент памяти, вывести
 //сообщение в поток ошибок и прервать выполнение программы
 
-void check_Memory_(vector *v) {
+extern void check_Memory_(vector *v) {
     if (v->data == NULL) {
         fprintf(stderr, "bad alloc");
         exit(1);
@@ -12,16 +12,16 @@ void check_Memory_(vector *v) {
 }
 
 
-bool isEmpty(vector *v) {
+extern bool isEmpty(vector *v) {
     return v->size == 0 ? true : false;
 }
 
-bool isFull(vector *v) {
+extern bool isFull(vector *v) {
     return v->size == v->capacity ? true : false;
 }
 
 
-vector createVector(size_t n) {
+extern vector createVector(size_t n) {
     vector v;
     v.size = 0;
     v.capacity = n;
@@ -33,7 +33,7 @@ vector createVector(size_t n) {
 }
 
 
-void reserve(vector *v, size_t newCapacity) {
+extern void reserve(vector *v, size_t newCapacity) {
     if (newCapacity == 0)
         v->data = NULL;
     else if (newCapacity < v->size) {
@@ -47,29 +47,29 @@ void reserve(vector *v, size_t newCapacity) {
     }
 }
 
-void clear(vector *v) {
+extern void clear(vector *v) {
     v->size = 0;
 }
 
-void shrinkToFit(vector *v) {
+extern void shrinkToFit(vector *v) {
     if (!isFull(v)) {
         v->data = (int*)realloc(v->data, sizeof(int)*v->size);
         v->capacity = v->size;
     }
 }
 
-void deleteVector(vector *v) {
+extern void deleteVector(vector *v) {
     free(v -> data);
     v->data = NULL;
     v->size = 0;
     v->capacity = 0;
 }
 
-int getVectorValue(vector *v, size_t i) {
+extern int getVectorValue(vector *v, size_t i) {
     return v->data[i];
 }
 
-void extension_Memory_Vector_(vector *v) {
+extern void extension_Memory_Vector_(vector *v) {
     if (v->capacity == 0) {
         v->data = (int*)realloc(v->data, sizeof(int));
         v->capacity = 1;
@@ -80,12 +80,12 @@ void extension_Memory_Vector_(vector *v) {
     check_Memory_(v);
 }
 
-void pushBack(vector *v, int x) {
+extern void pushBack(vector *v, int x) {
     extension_Memory_Vector_(v);
     append_(v->data,  &v->size, x);
 }
 
-void popBack(vector *v) {
+extern void popBack(vector *v) {
     if (isEmpty(v)) {
         fprintf(stderr, "vector is empty");
         exit(1);
@@ -93,14 +93,14 @@ void popBack(vector *v) {
         deleteByPosSaveOrder_(v->data, &v->size, v->size);
 }
 
-int* atVector(vector *v, size_t index) {
+extern int* atVector(vector *v, size_t index) {
     return v->data + index - 1;
 }
 
-int* back(vector *v) {
+extern int* back(vector *v) {
     return v->data + v->size - 1;
 }
 
-int* front(vector *v) {
+extern int* front(vector *v) {
     return v->data;
 }
