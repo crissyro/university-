@@ -1,7 +1,7 @@
 #include "matrix.h"
 
 
-void check_Memory_(int *a) {
+static void check_Memory_(int *a) {
     if (*a == NULL) {
         fprintf(stderr, "Memory allocation failed\n");
         exit(1);
@@ -9,7 +9,7 @@ void check_Memory_(int *a) {
 }
 
 //размещает в динамической памяти матрицу размером nRows на nCols
-matrix getMemMatrix(int nRows, int nCols) {
+extern matrix getMemMatrix(int nRows, int nCols) {
     int **values = (int **) malloc(sizeof(int *) * nRows);
     for (int i = 0; i < nRows; i++)
         values[i] = (int *) malloc(sizeof(int) * nCols);
@@ -17,7 +17,7 @@ matrix getMemMatrix(int nRows, int nCols) {
 }
 
 //размещает в динамической памяти массив из nMatrices матриц размером nRows на nCols
-matrix *getMemArrayOfMatrices(int nMatrices, int nRows, int nCols) {
+extern matrix *getMemArrayOfMatrices(int nMatrices, int nRows, int nCols) {
     matrix *ms = (matrix *) malloc(sizeof(matrix) * nMatrices);
     for (int i = 0; i < nMatrices; i++)
         ms[i] = getMemMatrix(nRows, nCols);
@@ -25,7 +25,7 @@ matrix *getMemArrayOfMatrices(int nMatrices, int nRows, int nCols) {
 }
 
 //освобождает память, выделенную под хранение матрицы m
-void freeMemMatrix(matrix *m) {
+extern void freeMemMatrix(matrix *m) {
     for (int i = 0; i < m->nRows; i++)
         free(m->values[i]);
 
@@ -33,7 +33,7 @@ void freeMemMatrix(matrix *m) {
 }
 
 //освобождает память, выделенную под хранение массива ms из nMatrices матриц
-void freeMemMatrices(matrix *ms, int nMatrices) {
+extern void freeMemMatrices(matrix *ms, int nMatrices) {
     for (int i = 0; i < nMatrices; i++)
         freeMemMatrix(&ms[i]);
 
@@ -42,7 +42,7 @@ void freeMemMatrices(matrix *ms, int nMatrices) {
 
 
 //ввод матрицы m
-void inputMatrix(matrix *m) {
+extern void inputMatrix(matrix *m) {
     for (size_t i = 0; i < m->nRows; i++)
         for (size_t j = 0; j < m->nCols; j++)
             scanf("%d", &m->values[i][j]);
@@ -50,13 +50,13 @@ void inputMatrix(matrix *m) {
 }
 
 //ввод массива из nMatrices матриц, хранящейся по адресу ms
-void inputMatrices(matrix *ms, int nMatrices) {
+extern void inputMatrices(matrix *ms, int nMatrices) {
     for (size_t i = 0; i < nMatrices; i++)
         inputMatrix(&ms[i]);
 }
 
 //вывод матрицы m
-void outputMatrix(matrix m) {
+extern void outputMatrix(matrix m) {
     for (size_t i = 0; i < m.nRows; i++) {
         printf("\n");
         for (size_t j = 0; j < m.nCols; j++)
@@ -67,7 +67,7 @@ void outputMatrix(matrix m) {
 
 
 //вывод массива из nMatrices матриц, хранящейся по адресу ms
-void outputMatrices(matrix *ms, int nMatrices) {
+extern void outputMatrices(matrix *ms, int nMatrices) {
     for (size_t i = 0; i < nMatrices; i++) {
         outputMatrix(ms[i]);
     }
@@ -75,7 +75,7 @@ void outputMatrices(matrix *ms, int nMatrices) {
 
 
 //обмен строк с порядковыми номерами i1 и i2 в матрице m.
-void swapRows(matrix m, int i1, int i2) {
+extern void swapRows(matrix m, int i1, int i2) {
     assert(i1 >= 0 && i1 < m.nRows && i2 >= 0 && i2 < m.nRows);
 
     int *temp = m.values[i1];
@@ -85,7 +85,7 @@ void swapRows(matrix m, int i1, int i2) {
 
 
 //обмен колонок с порядковыми номерами j1 и j2 в матрице m
-void swapColumns(matrix m, int j1, int j2) {
+extern void swapColumns(matrix m, int j1, int j2) {
     assert(j1 >= 0 && j1 < m.nCols && j2 >= 0 && j2 < m.nCols);
 
     for (int i = 0; i < m.nRows; i++) {
@@ -97,7 +97,7 @@ void swapColumns(matrix m, int j1, int j2) {
 
 //выполняет сортировку вставками строк матрицы m
 //по неубыванию значения функции criteria применяемой для строк
-void insertionSortRowsMatrixByRowCriteria(matrix m, int (*criteria)(int *, int)) {
+extern void insertionSortRowsMatrixByRowCriteria(matrix m, int (*criteria)(int *, int)) {
     int *array_criteria = malloc(m.nRows * sizeof(int));
     check_Memory_(array_criteria);
     for (int i = 0; i < m.nRows; i++) {
@@ -121,7 +121,7 @@ void insertionSortRowsMatrixByRowCriteria(matrix m, int (*criteria)(int *, int))
 
 //выполняет сортировку выбором столбцов матрицы m
 // по неубыванию значения функции criteria применяемой для столбцов
-void selectionSortColsMatrixByColCriteria(matrix m, int (*criteria)(int *, int)) {
+extern void selectionSortColsMatrixByColCriteria(matrix m, int (*criteria)(int *, int)) {
     int *array_criteria = (int *) malloc(m.nCols * sizeof(int));
     check_Memory_(array_criteria);
     int *temp_column = (int *) malloc(m.nRows * sizeof(int));
@@ -157,14 +157,14 @@ void selectionSortColsMatrixByColCriteria(matrix m, int (*criteria)(int *, int))
 
 //возвращает значение ’истина’, если
 //матрица m является квадратной, ложь – в противном случае
-bool isSquareMatrix(matrix *m) {
+extern bool isSquareMatrix(matrix *m) {
     return m->nRows == m->nCols;
 }
 
 
 //возвращает значение ’истина’,
 //если матрицы m1 и m2 равны, ложь – в противном случае
-bool areTwoMatricesEqual(matrix *m1, matrix *m2) {
+extern bool areTwoMatricesEqual(matrix *m1, matrix *m2) {
     if (m1->nRows != m2->nRows || m1->nCols != m2->nCols)
         return false;
     for (int i = 0; i < m1->nRows; i++)
@@ -178,7 +178,7 @@ bool areTwoMatricesEqual(matrix *m1, matrix *m2) {
 
 // возвращает значение ’истина’, если матрица
 //m является единичной, ложь – в противном случае
-bool isEMatrix(matrix *m) {
+extern bool isEMatrix(matrix *m) {
     if (!isSquareMatrix(m))
         return false;
 
@@ -192,7 +192,7 @@ bool isEMatrix(matrix *m) {
 
 //возвращает значение ’истина’,
 //если матрица m является симметричной, ложь – в противном случае
-bool isSymmetricMatrix(matrix *m) {
+extern bool isSymmetricMatrix(matrix *m) {
     if (!isSquareMatrix(m))
         return false;
     for (int i = 0; i < m->nRows; i++) {
@@ -208,7 +208,7 @@ bool isSymmetricMatrix(matrix *m) {
 
 
 //транспонирует квадратную матрицу m
-void transposeSquareMatrix(matrix *m) {
+extern void transposeSquareMatrix(matrix *m) {
     for (int i = 0; i < m->nRows; i++) {
         for (int j = i + 1; j < m->nCols; j++) {
             int temp = m->values[i][j];
@@ -220,7 +220,7 @@ void transposeSquareMatrix(matrix *m) {
 
 
 //транспонирует матрицу m
-void transposeMatrix(matrix *m) {
+extern void transposeMatrix(matrix *m) {
     int temp = m->nRows;
     m->nRows = m->nCols;
     m->nCols = temp;
@@ -236,7 +236,7 @@ void transposeMatrix(matrix *m) {
 
 
 //возвращает позицию минимального элемента матрицы m
-position getMinValuePos(matrix m) {
+extern position getMinValuePos(matrix m) {
     int min = m.values[0][0];
     position min_position = {0, 0};
 
@@ -254,7 +254,7 @@ position getMinValuePos(matrix m) {
 
 
 //возвращает позицию максимального элемента матрицы m
-position getMaxValuePos(matrix m) {
+extern position getMaxValuePos(matrix m) {
     int max = m.values[0][0];
     position max_position = {0, 0};
 
@@ -272,7 +272,7 @@ position getMaxValuePos(matrix m) {
 
 
 //возвращает матрицу размера nRows на nCols, построенную из элементов массива a
-matrix createMatrixFromArray(const int *a, int nRows, int nCols) {
+extern matrix createMatrixFromArray(const int *a, int nRows, int nCols) {
     matrix m = getMemMatrix(nRows, nCols);
     int k = 0;
     for (int i = 0; i < nRows; i++)
@@ -284,7 +284,7 @@ matrix createMatrixFromArray(const int *a, int nRows, int nCols) {
 
 //возвращает указатель на нулевую матрицу массива из nMatrices матриц,
 //размещенных в динамической памяти, построенных из элементов массива a
-matrix *createArrayOfMatrixFromArray(const int *values, size_t nMatrices, size_t nRows, size_t nCols) {
+extern matrix *createArrayOfMatrixFromArray(const int *values, size_t nMatrices, size_t nRows, size_t nCols) {
     matrix *ms = getMemArrayOfMatrices(nMatrices, nRows, nCols);
 
     int l = 0;
@@ -296,7 +296,7 @@ matrix *createArrayOfMatrixFromArray(const int *values, size_t nMatrices, size_t
     return ms;
 }
 
-matrix copyMatrix(matrix *original) {
+extern matrix copyMatrix(matrix *original) {
     matrix copy;
     copy.nRows = original->nRows;
     copy.nCols = original->nCols;
